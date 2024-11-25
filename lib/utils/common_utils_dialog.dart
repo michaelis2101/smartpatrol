@@ -1,0 +1,4 @@
+enum CommonAlertDialogStyle {
+  info,
+  error,
+}

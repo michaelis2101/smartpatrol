@@ -1,0 +1,650 @@
+[
+    {
+        "nik": "20162187",
+        "password": "c1a8ca0413c381ab02c0eca86840f398",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Khaerul Anwar",
+        "username": "20162187",
+        "group": "Shift A"
+    },
+    {
+        "nik": "20141988",
+        "password": "19d56bd435f8f41f5042f24854d3a784",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Ahmad Agam",
+        "username": "20141988",
+        "group": "Daily"
+    },
+    {
+        "nik": "20162175",
+        "password": "444c373cb56a71fdbdca8f5a0168cf9b",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Ade Setiawan",
+        "username": "20162175",
+        "group": "Shift A"
+    },
+    {
+        "nik": "19920842",
+        "password": "9bda8d3a68a5844b9e53aa4d054518ff",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Iwan Kurnia",
+        "username": "19920842",
+        "group": "Daily"
+    },
+    {
+        "nik": "19961313",
+        "password": "6f5d56c130259bcbb606f63288e5f841",
+        "level": "approval",
+        "jabatan": "Section Chief",
+        "name": "Sumarna",
+        "username": "19961313",
+        "group": "Daily"
+    },
+    {
+        "nik": "20182347",
+        "password": "18ce3615c49e2137b64c8df310320a7c",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Muhammad Yozardi A",
+        "username": "20182347",
+        "group": "Daily"
+    },
+    {
+        "nik": "20011815",
+        "password": "a0eb9c26d8fa6c5b56329e820ec1e510",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Iswadi",
+        "username": "20011815",
+        "group": "Shift B"
+    },
+    {
+        "nik": "20162181",
+        "password": "f7eec90f2c25640092964389a940ebde",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Hamdani Deri H",
+        "username": "20162181",
+        "group": "Shift C"
+    },
+    {
+        "nik": "20011818",
+        "password": "6def363e11db6e32f9c94f5ac47123dd",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Rizki Kurniawan",
+        "username": "20011818",
+        "group": "Shift C"
+    },
+    {
+        "nik": "19971460",
+        "password": "56ce2c6395a7fa4ced4268b350346a1e",
+        "level": "approval",
+        "jabatan": "Staff",
+        "name": "M. Kurdi",
+        "username": "19971460",
+        "group": "Shift A"
+    },
+    {
+        "nik": "20192390",
+        "password": "a2a64d279ec8e00721cab41ba0152cc3",
+        "level": "approval",
+        "jabatan": "Staff",
+        "name": "M. Ihsan",
+        "username": "20192390",
+        "group": "Shift D"
+    },
+    {
+        "nik": "19951159",
+        "password": "47f3d4394000a4eedc55bc356b7d0199",
+        "level": "approval",
+        "jabatan": "Admin",
+        "name": "Sucipto Budi S",
+        "username": "19951159",
+        "group": "Daily"
+    },
+    {
+        "nik": "20192371",
+        "password": "55c8f3a5c15de4ef2da71af636a1a994",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Ali Makshum",
+        "username": "20192371",
+        "group": "Shift C"
+    },
+    {
+        "nik": "20162170",
+        "password": "55cceac7f9fcc19f6d1c66046ee7a99e",
+        "level": "approval",
+        "jabatan": "Admin",
+        "name": "Aslama Isnaeni",
+        "username": "20162170",
+        "group": "Daily"
+    },
+    {
+        "nik": "19961303",
+        "password": "82cf6b393479366d0a8f340dd9794272",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Sumarsono",
+        "username": "19961303",
+        "group": "Daily"
+    },
+    {
+        "nik": "20011828",
+        "password": "d26632f648d6caa560707a611f7e8010",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "A. Hidayatulloh",
+        "username": "20011828",
+        "group": "Shift D"
+    },
+    {
+        "nik": "20162193",
+        "password": "98d024ccf6bdb521e2cf53e433aff433",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Rifki Fauzi",
+        "username": "20162193",
+        "group": "Daily"
+    },
+    {
+        "nik": "20162173",
+        "password": "ee174091eb6b2cc6587125a3a9f1c776",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Diky Ardian",
+        "username": "20162173",
+        "group": "Shift D"
+    },
+    {
+        "nik": "20162200",
+        "password": "d4de58abd3ee6db94aa886894afcef75",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Fariz Hanifuddin",
+        "username": "20162200",
+        "group": "Shift A"
+    },
+    {
+        "nik": "20162199",
+        "password": "a91a9dd05ace4747798ad8f4615084d9",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Fadil Pamungkas",
+        "username": "20162199",
+        "group": "Shift A"
+    },
+    {
+        "nik": "20162188",
+        "password": "6c97bebe9a703981ab776af85792b1c3",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Wahyu Hidayat",
+        "username": "20162188",
+        "group": "Daily"
+    },
+    {
+        "nik": "20162217",
+        "password": "8f399a8ef9afb6d4789ed0c1defba69d",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Roni Randika",
+        "username": "20162217",
+        "group": "Shift C"
+    },
+    {
+        "nik": "19890325",
+        "password": "221474c8c300dbbf5eff8b237530af82",
+        "level": "approval",
+        "jabatan": "Section Chief",
+        "name": "Jaja",
+        "username": "19890325",
+        "group": "Daily"
+    },
+    {
+        "nik": "20162220",
+        "password": "039051f96db8a6c1ead872e1a01c378f",
+        "level": "approval",
+        "jabatan": "Staff",
+        "name": "Aditya Putra Pratama",
+        "username": "20162220",
+        "group": "Shift C"
+    },
+    {
+        "nik": "20162176",
+        "password": "9245a5da1e4aa4e127f8f1f6a362ea20",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "TB. Fikri. F",
+        "username": "20162176",
+        "group": "Shift B"
+    },
+    {
+        "nik": "19961182",
+        "password": "ecafabdaff0e52b596655fd6034d9d66",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Masrajuddin Arsyad",
+        "username": "19961182",
+        "group": "Daily"
+    },
+    {
+        "nik": "20162172",
+        "password": "01325fcce688e2ad4de4a0050ff6cd08",
+        "level": "approval",
+        "jabatan": "Admin",
+        "name": "Tria Friandani",
+        "username": "20162172",
+        "group": "Daily"
+    },
+    {
+        "nik": "20162190",
+        "password": "faac46655446f309a6694750358299d7",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Rohmatullah",
+        "username": "20162190",
+        "group": "Shift D"
+    },
+    {
+        "nik": "19971449",
+        "password": "aa8604fb99536c8e0ef59d8baa84bc6b",
+        "level": "operator",
+        "jabatan": "Deputy",
+        "name": "Deni Pasla",
+        "username": "19971449",
+        "group": "Shift D"
+    },
+    {
+        "nik": "19981649",
+        "password": "35b80ddee53d2b9f05a446eab5a33a4b",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Andi Sunardi",
+        "username": "19981649",
+        "group": "Shift C"
+    },
+    {
+        "nik": "20162219",
+        "password": "5bd4a600a97fd4fd4583a38b14aa82e8",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Advenio Nostra",
+        "username": "20162219",
+        "group": "Shift D"
+    },
+    {
+        "nik": "20162195",
+        "password": "770d46de2f5feba6378a404053ed8489",
+        "level": "approval",
+        "jabatan": "Staff",
+        "name": "Adi Nuryansyah",
+        "username": "20162195",
+        "group": "Daily"
+    },
+    {
+        "nik": "19941016",
+        "password": "025e8c27dc641e0cd44692c04f0ec1a8",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Ishak",
+        "username": "19941016",
+        "group": "Shift D"
+    },
+    {
+        "nik": "19971507",
+        "password": "822212e9ca285adf9c6d3432aad58133",
+        "level": "operator",
+        "jabatan": "Deputy",
+        "name": "Mulya",
+        "username": "19971507",
+        "group": "Shift A"
+    },
+    {
+        "nik": "20162202",
+        "password": "ffe45c9d922d53ff37f60fa5b6fd8a22",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Jodi Bramantika Ashary",
+        "username": "20162202",
+        "group": "Shift B"
+    },
+    {
+        "nik": "20182349",
+        "password": "d6cd9aff7c9b3dd4029194c332b722c0",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Sandi Wicaksono",
+        "username": "20182349",
+        "group": "Shift C"
+    },
+    {
+        "nik": "19880204",
+        "password": "3bd6459f786a401903d368264531975a",
+        "level": "operator",
+        "jabatan": "Deputy",
+        "name": "Selamet Sidikwanto",
+        "username": "19880204",
+        "group": "Shift C"
+    },
+    {
+        "nik": "20131933",
+        "password": "bdadd22cc7f0327891184cb9466f51fc",
+        "level": "approval",
+        "jabatan": "Staff",
+        "name": "Sulung Hanggoro P",
+        "username": "20131933",
+        "group": "Shift D"
+    },
+    {
+        "nik": "19910768",
+        "password": "88f47e0e3008285e8970df22ca20685d",
+        "level": "approval",
+        "jabatan": "Section Chief",
+        "name": "Hadi Santoso",
+        "username": "19910768",
+        "group": "Daily"
+    },
+    {
+        "nik": "19981597",
+        "password": "10c9d13be9ebf37a0ac0ef23830b8909",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Fendry Hermawan",
+        "username": "19981597",
+        "group": "Shift B"
+    },
+    {
+        "nik": "20192369",
+        "password": "cb779f370e28ca760ac00a55b366dca5",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Ilham Fauzi",
+        "username": "20192369",
+        "group": "Shift D"
+    },
+    {
+        "nik": "19981595",
+        "password": "20943fb7115f08b1f7158b7d0aaa3a8e",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Parlindungan Tuah",
+        "username": "19981595",
+        "group": "Shift A"
+    },
+    {
+        "nik": "20162170",
+        "password": "55cceac7f9fcc19f6d1c66046ee7a99e",
+        "level": "approval",
+        "jabatan": "Staff",
+        "name": " Aslama Isnaeni",
+        "username": "20162170",
+        "group": "Daily"
+    },
+    {
+        "nik": "20011794",
+        "password": "9544668a09389afbe2ea6b549ca4c8c1",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Lilik M",
+        "username": "20011794",
+        "group": "Shift D"
+    },
+    {
+        "nik": "20182342",
+        "password": "e8cc42d1e41e5bcd835b21d8721c58e9",
+        "level": "approval",
+        "jabatan": "Staff",
+        "name": "Fakhrul Wadudi",
+        "username": "20182342",
+        "group": "Daily"
+    },
+    {
+        "nik": "20182346",
+        "password": "f32a86c95f47c5b646ead1cc89c36c93",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Ade Fikri",
+        "username": "20182346",
+        "group": "Daily"
+    },
+    {
+        "nik": "12345",
+        "password": "827ccb0eea8a706c4c34a16891f84e7b",
+        "level": "operator",
+        "jabatan": "Admin",
+        "name": "opik",
+        "username": "opik",
+        "group": "Daily"
+    },
+    {
+        "nik": "20162216",
+        "password": "e96c860db2cd1ede78d74a6a930a973a",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Rizki Ahmad Fauzi",
+        "username": "20162216",
+        "group": "Shift A"
+    },
+    {
+        "nik": "20202402",
+        "password": "daec7ee19729cde67e7dc9c29b67c4c0",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Muhammad Abdul Azziz",
+        "username": "20202402",
+        "group": "Shift C"
+    },
+    {
+        "nik": "20172278",
+        "password": "a77a2660ac4b26427e5117c86edc4816",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Lukman Hakim",
+        "username": "20172278",
+        "group": "Shift B"
+    },
+    {
+        "nik": "19880198",
+        "password": "004ae07763aead0e8ac3cebe2052a795",
+        "level": "approval",
+        "jabatan": "Staff",
+        "name": "M. Jaelani",
+        "username": "19880198",
+        "group": "Daily"
+    },
+    {
+        "nik": "20152124",
+        "password": "65d05580017321b6b04b02ca089acd7b",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Surya Aji W",
+        "username": "20152124",
+        "group": "Shift C"
+    },
+    {
+        "nik": "19880192",
+        "password": "2b41690de991bcbf721b0710b1d1ef5b",
+        "level": "operator",
+        "jabatan": "Deputy",
+        "name": "Yunnardi",
+        "username": "19880192",
+        "group": "Daily"
+    },
+    {
+        "nik": "20001703",
+        "password": "351380cdb5816c0e492518c72a3973e1",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Supomo",
+        "username": "20001703",
+        "group": "Shift A"
+    },
+    {
+        "nik": "20162207",
+        "password": "df778293851d1785aa5d930fdc286db4",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Sigit Faturrohman",
+        "username": "20162207",
+        "group": "Shift C"
+    },
+    {
+        "nik": "20182348",
+        "password": "2329c1cfb4acce5883431be86754024a",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Octav Jody Herlambang",
+        "username": "20182348",
+        "group": "Daily"
+    },
+    {
+        "nik": "20162189",
+        "password": "03e2370b0d2cbdb49ca1022847039511",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Didi Yusuf W",
+        "username": "20162189",
+        "group": "Shift D"
+    },
+    {
+        "nik": "20162211",
+        "password": "9fff30d63a2f9e0ad3c836ea930d8106",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": " Yusuf Nurrrohim",
+        "username": "20162211",
+        "group": "Shift C"
+    },
+    {
+        "nik": "19971400",
+        "password": "2fbbbc15a142f4b9db078042a9b3eb08",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Dede",
+        "username": "19971400",
+        "group": "Daily"
+    },
+    {
+        "nik": "19930971",
+        "password": "6a35cf111c40892816164e91c27852d1",
+        "level": "approval",
+        "jabatan": "Section Chief",
+        "name": "I Putu Mudhita",
+        "username": "19930971",
+        "group": "Daily"
+    },
+    {
+        "nik": "20162214",
+        "password": "1ec356e3517f8c7243a2612cb7c5afc5",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Reinaldi Irawan",
+        "username": "20162214",
+        "group": "Shift B"
+    },
+    {
+        "nik": "20162178",
+        "password": "d45703ec4663a2d762cd802632ce30c7",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Fahri Ramadhan",
+        "username": "20162178",
+        "group": "Shift B"
+    },
+    {
+        "nik": "19920788",
+        "password": "096fb748f1e47ae21676ac51a9e8c23f",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Cecep Dadang N.",
+        "username": "19920788",
+        "group": "Shift C"
+    },
+    {
+        "nik": "19981604",
+        "password": "7ad3e8ee0adc161ff635d6de9a62319e",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Juli Siswanto",
+        "username": "19981604",
+        "group": "Shift B"
+    },
+    {
+        "nik": "administrator",
+        "password": "200ceb26807d6bf99fd6f4f0d1ca54d4",
+        "level": "approval",
+        "jabatan": "Admin",
+        "name": "administrator",
+        "username": "administrator",
+        "group": "Daily"
+    },
+    {
+        "nik": "20162205",
+        "password": "d7a7f8a59fa4794a04a75c43f72e6b28",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Muh. Iqbal Saifulloh",
+        "username": "20162205",
+        "group": "Shift A"
+    },
+    {
+        "nik": "20162218",
+        "password": "cd11d7b3e0d22f8828e34610f8c113cd",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Arfando Yudha P",
+        "username": "20162218",
+        "group": "Shift D"
+    },
+    {
+        "nik": "20162197",
+        "password": "5da31ec03593e0d0e9f4ffbc759e441e",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Ahmad Nurdiin",
+        "username": "20162197",
+        "group": "Shift B"
+    },
+    {
+        "nik": "19961195",
+        "password": "871dd3f6879770aa95a104b23899e49f",
+        "level": "approval",
+        "jabatan": "Deputy",
+        "name": "Iswandi",
+        "username": "19961195",
+        "group": "Shift B"
+    },
+    {
+        "nik": "20172280",
+        "password": "0d713ef101a4765c899be822d4345c47",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Muhammad Ridwan",
+        "username": "20172280",
+        "group": "Shift A"
+    },
+    {
+        "nik": "19941017",
+        "password": "dbe4148ea31ee0d4436fec769888573c",
+        "level": "approval",
+        "jabatan": "Staff",
+        "name": "Adhitya Bayu Kumoro",
+        "username": "19941017",
+        "group": "Shift B"
+    },
+    {
+        "nik": "19961209",
+        "password": "38b504d8957dcc508e2a7e8f4b9b5572",
+        "level": "operator",
+        "jabatan": "Technician",
+        "name": "Suparyanto",
+        "username": "19961209",
+        "group": "Daily"
+    }
+]
