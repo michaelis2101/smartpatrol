@@ -55,7 +55,7 @@ dependencies:
   uuid: ^4.2.1
   modal_bottom_sheet: ^2.1.2
   cr_file_saver: ^0.0.2+1
-  win32: ^5.1.1
+  # win32: ^5.1.1
 
 # dependency_overrides:
 #   # archive: ^3.6.1
