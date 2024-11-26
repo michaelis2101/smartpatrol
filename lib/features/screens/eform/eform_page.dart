@@ -493,17 +493,21 @@ class _EformPageState extends State<EformPage> {
                                           //         isAreaBloc: true,
                                           //         value: false));
                                           areaBloc.add(
-                                              SaveAllStopEFormTransactionEvent(value:false,
-                                                  equipmentsByCpl: state.equipmentsByCpl));
+                                              SaveAllStopEFormTransactionEvent(
+                                                  value: false,
+                                                  equipmentsByCpl:
+                                                      state.equipmentsByCpl));
                                         } else {
                                           //equipment
 
                                           // for (var i in state.equipmentsByCpl) {
                                           //   EformController.serviceBloc.add(
                                           //       SaveAllStopEFormTransactionEvent(equipmentsByCpl:state.equipmentsByCpl));
-                                            areaBloc.add(
-                                                SaveAllStopEFormTransactionEvent(value:false,
-                                                    equipmentsByCpl: state.equipmentsByCpl));
+                                          areaBloc.add(
+                                              SaveAllStopEFormTransactionEvent(
+                                                  value: false,
+                                                  equipmentsByCpl:
+                                                      state.equipmentsByCpl));
                                           // }
                                         }
                                       }
@@ -583,15 +587,18 @@ class _EformPageState extends State<EformPage> {
                                         if (index == eformStepService) {
                                           log("check only 1");
                                           areaBloc.add(
-                                              SaveAllStopEFormTransactionEvent(value:true,
-                                                  equipmentsByCpl: state.equipmentsByCpl));
+                                              SaveAllStopEFormTransactionEvent(
+                                                  value: true,
+                                                  equipmentsByCpl:
+                                                      state.equipmentsByCpl));
                                         } else {
                                           log("check all");
                                           //check stop all by equipmentCpl
                                           areaBloc.add(
-                                              SaveAllStopEFormTransactionEvent(value:true,
-                                                  equipmentsByCpl: state.equipmentsByCpl));
-
+                                              SaveAllStopEFormTransactionEvent(
+                                                  value: true,
+                                                  equipmentsByCpl:
+                                                      state.equipmentsByCpl));
                                         }
                                       }
                                   }
@@ -2299,7 +2306,7 @@ class _EformPageState extends State<EformPage> {
                 secondary: Colors.green,
               ),
           textTheme: const TextTheme(
-            caption: TextStyle(
+            bodySmall: TextStyle(
                 color: Colors.red), // Color for step numbers and titles
           ),
         ),
