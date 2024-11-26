@@ -2,7 +2,7 @@
 # See https://dart.dev/tools/pub/glossary#lockfile
 packages:
   archive:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: archive
       sha256: "7b875fd4a20b165a3084bd2d210439b22ebc653f21cea4842729c0c30c82596b"
@@ -814,7 +814,7 @@ packages:
     source: hosted
     version: "0.3.0"
   win32:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: win32
       sha256: "464f5674532865248444b4c3daca12bd9bf2d7c47f759ce2617986e7229494a8"
