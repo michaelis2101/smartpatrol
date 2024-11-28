@@ -1020,13 +1020,17 @@ class _EformPageState extends State<EformPage> {
   String getStepTitle(index) {
     switch (index) {
       case 1:
-        return "Section";
+        return "Organization";
+      // return "Section";
       case 2:
-        return "Area";
+        return "Building";
+      // return "Area";
       case 3:
-        return "Document";
+        return "Floor";
+      // return "Document";
       case 4:
-        return "Equipment";
+        return "Room";
+      // return "Equipment";
       case 5:
         return "Service";
       case 6:
@@ -1066,6 +1070,7 @@ class _EformPageState extends State<EformPage> {
                       title: data.kodeFormat,
                       subtitle: "",
                       onTap: () {
+                        print(data.id);
                         EformController.idFormatSelected.value = data.id;
                         EformController.formatSelected.value = data.kodeFormat;
                         EformController.searchInput.clear();
@@ -1095,7 +1100,7 @@ class _EformPageState extends State<EformPage> {
                       onTap: () {
                         EformController.searchInput.clear();
                         areaBloc.add(GetAreaBySectionEvent(data.id));
-                        EformController.indexPage.value = 2;
+                        EformController.indexPage.value = eformStepArea;
                         EformController.sectionTitle.value = data.namaSection;
                         EformController.sectionSelected.value = data.id;
                         EformController.sectionCollection.value =
@@ -5126,6 +5131,8 @@ class EformController {
   static final TextEditingController inputB2minB1 = TextEditingController();
   static final TextEditingController inputFI21002A = TextEditingController();
   static final TextEditingController inputB1minA = TextEditingController();
+  // static final ValueNotifier<int> indexPage = ValueNotifier(1),
+  //     indexEquipment = ValueNotifier(1);
   static final ValueNotifier<int> indexPage = ValueNotifier(0),
       indexEquipment = ValueNotifier(0);
   static final ValueNotifier<List<Equipment>> equipmentCollection =

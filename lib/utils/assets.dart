@@ -47,6 +47,7 @@ class ImageAssets {
       '${AssetPath.imagePath}/logoitasoft2020.png';
   static const String logoItasoftwhite =
       '${AssetPath.imagePath}/logoitasoft2020white.png';
+  static const String bgsplash = '${AssetPath.imagePath}/bs_splash.png';
 }
 
 class VectorAssets {

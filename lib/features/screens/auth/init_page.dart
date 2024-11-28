@@ -27,7 +27,8 @@ class _InitScreen extends State<InitScreen> {
     return BlocListener<AuthBloc, AuthState>(
       bloc: bloc,
       child: AppImage(
-        ImageAssets.splash,
+        // ImageAssets.splash,
+        ImageAssets.bgsplash,
         width: AppUtil.width,
         height: AppUtil.height,
       ),
