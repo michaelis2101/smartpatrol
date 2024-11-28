@@ -174,7 +174,6 @@ class _EformPageState extends State<EformPage> {
                                                                                   }
 
                                                                                   //check trx yg equipmentnya ini
-
                                                                                   if (collection.isEmpty) {
                                                                                     if (kDebugMode) {
                                                                                       log("collection empty mode");
