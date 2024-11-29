@@ -68,84 +68,204 @@ class _NfcScanPageState extends State<NfcScanPage> {
     );
   }
 
-  Widget _checkIsNfcAvailable() => BlocBuilder<EFormBloc, EFormState>(
-      bloc: nfcBloc,
-      builder: (context, nfcState) => nfcState.nfcIsAvailable
-          ? //For ios always false, for android tru
-          Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Text(
-                //   '$_counter',
-                //   style: const TextStyle(color: Colors.red, fontSize: 16),
-                // ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextButton(
-                    onPressed:
-                        ((defaultTargetPlatform == TargetPlatform.android) &&
-                                listenerRunning)
-                            ? null
-                            : _listenForNFCEvents,
-                    child: Text(
-                        defaultTargetPlatform == TargetPlatform.android
-                            ? listenerRunning
-                                ? 'Ready to Scan'
-                                : 'Tap Button to read NFC'
-                            : 'Read from tag',
+  // Widget _checkIsNfcAvailable() => BlocBuilder<EFormBloc, EFormState>(
+  //     bloc: nfcBloc,
+  //     builder: (context, nfcState) => nfcState.nfcIsAvailable
+  //         ? //For ios always false, for android tru
+  //         Column(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [
+  //               Padding(
+  //                 padding: const EdgeInsets.all(8.0),
+  //                 child: TextButton(
+  //                   onPressed:
+  //                       ((defaultTargetPlatform == TargetPlatform.android) &&
+  //                               listenerRunning)
+  //                           ? null
+  //                           : _listenForNFCEvents,
+  //                   child: Text(
+  //                       defaultTargetPlatform == TargetPlatform.android
+  //                           ? listenerRunning
+  //                               ? 'Ready to Scan'
+  //                               : 'Tap Button to read NFC'
+  //                           : 'Read from tag',
+  //                       style:
+  //                           const TextStyle(color: Colors.black, fontSize: 16)),
+  //                 ),
+  //               ),
+  //               listenerRunning
+  //                   ? Container()
+  //                   // ? Lottie.asset('assets/lottie/nfc_card_read.json')
+  //                   : InkWell(
+  //                       onTap: ((defaultTargetPlatform ==
+  //                                   TargetPlatform.android) &&
+  //                               listenerRunning)
+  //                           ? null
+  //                           : _listenForNFCEvents,
+  //                       child: Container(
+  //                         width: 80,
+  //                         height: 80,
+  //                         decoration: buttonPageNFCDecoration,
+  //                         child: Padding(
+  //                           padding: const EdgeInsets.all(10.0),
+  //                           child: svgIcon,
+  //                         ),
+  //                       ),
+  //                     ),
+  //               ((defaultTargetPlatform == TargetPlatform.android) &&
+  //                       listenerRunning)
+  //                   ? Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: Text(
+  //                         'Hold Phone near the NFC field',
+  //                         style: kDefaultText,
+  //                       ))
+  //                   : Container(),
+  //             ],
+  //           )
+  //         : Container(
+  //             alignment: Alignment.center,
+  //             child: const Text("NFC Tidak Ada",
+  //                 style: TextStyle(color: Colors.black)),
+  //           ));
+
+//versi revisi 1
+  // Widget _checkIsNfcAvailable() => FutureBuilder<bool>(
+  //       future: NfcManager.instance.isAvailable(),
+  //       builder: (context, snapshot) {
+  //         // Check if the future has completed and we have a result
+  //         if (snapshot.connectionState == ConnectionState.done) {
+  //           // If NFC is available (snapshot.data is true)
+  //           if (snapshot.data == true) {
+  //             return Column(
+  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               children: [
+  //                 // Your existing NFC scanning UI components
+  //                 Padding(
+  //                   padding: const EdgeInsets.all(8.0),
+  //                   child: TextButton(
+  //                     onPressed:
+  //                         ((defaultTargetPlatform == TargetPlatform.android) &&
+  //                                 listenerRunning)
+  //                             ? null
+  //                             : _listenForNFCEvents,
+  //                     child: Text(
+  //                       defaultTargetPlatform == TargetPlatform.android
+  //                           ? listenerRunning
+  //                               ? 'Ready to Scan'
+  //                               : 'Tap Button to read NFC'
+  //                           : 'Read from tag',
+  //                       style:
+  //                           const TextStyle(color: Colors.black, fontSize: 16),
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 // Rest of your existing NFC UI...
+  //               ],
+  //             );
+  //           } else {
+  //             // If NFC is not available
+  //             return Container(
+  //               alignment: Alignment.center,
+  //               child: const Text(
+  //                 "NFC Tidak Ada",
+  //                 style: TextStyle(color: Colors.black),
+  //               ),
+  //             );
+  //           }
+  //         }
+
+  //         // While checking NFC availability, show a loading indicator
+  //         return Center(child: CircularProgressIndicator());
+  //       },
+  //     );
+
+  Widget _checkIsNfcAvailable() => FutureBuilder<bool>(
+        future: NfcManager.instance.isAvailable(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.data == true) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextButton(
+                      onPressed:
+                          // Unified condition for both platforms
+                          !listenerRunning ? _listenForNFCEvents : null,
+                      child: Text(
+                        // More generic text that works for both platforms
+                        listenerRunning
+                            ? 'NFC Scanning Active'
+                            : 'Tap to Start NFC Scan',
                         style:
-                            const TextStyle(color: Colors.black, fontSize: 16)),
-                  ),
-                ),
-                listenerRunning
-                    ? Lottie.asset('assets/lottie/nfc_card_read.json')
-                    : InkWell(
-                        onTap: ((defaultTargetPlatform == TargetPlatform.android) &&
-                            listenerRunning)
-                            ? null
-                            : _listenForNFCEvents,
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          decoration: buttonPageNFCDecoration,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: svgIcon,
-                          ),
-                        ),
+                            const TextStyle(color: Colors.black, fontSize: 16),
                       ),
-                ((defaultTargetPlatform == TargetPlatform.android) &&
-                        listenerRunning)
-                    ? Padding(
+                    ),
+                  ),
+
+                  // Conditionally show instruction text
+                  if (listenerRunning)
+                    Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           'Hold Phone near the NFC field',
                           style: kDefaultText,
-                        ))
-                    : Container(),
-              ],
-            )
-          : Container(
-              alignment: Alignment.center,
-              child: const Text("NFC Tidak Ada",
-                  style: TextStyle(color: Colors.black)),
-            ));
+                        )),
 
+                  // Your existing NFC scanning UI components...
+                ],
+              );
+            } else {
+              return Container(
+                alignment: Alignment.center,
+                child: const Text(
+                  "NFC Tidak Ada",
+                  style: TextStyle(color: Colors.black),
+                ),
+              );
+            }
+          }
+
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
+
+  // Future<void> _listenForNFCEvents() async {
+  //   //Always run this for ios but only once for android
+  //   if ((defaultTargetPlatform == TargetPlatform.android) &&
+  //           listenerRunning == false ||
+  //       defaultTargetPlatform == TargetPlatform.iOS) {
+  //     if ((defaultTargetPlatform == TargetPlatform.android)) {
+  //       AppUtil.snackBar(
+  //           message: 'NFC listener running in background now, approach tag(s)');
+  //       //Update button states
+  //       setState(() {
+  //         listenerRunning = true;
+  //       });
+  //     }
+  //     _tagRead();
+  //   }
+  // }
+
+//revisi 1
   Future<void> _listenForNFCEvents() async {
-    //Always run this for ios but only once for android
-    if ((defaultTargetPlatform == TargetPlatform.android) &&
-            listenerRunning == false ||
-        defaultTargetPlatform == TargetPlatform.iOS) {
-      if ((defaultTargetPlatform == TargetPlatform.android)) {
-        AppUtil.snackBar(
-            message: 'NFC listener running in background now, approach tag(s)');
-        //Update button states
-        setState(() {
-          listenerRunning = true;
-        });
-      }
-      _tagRead();
+    // Prevent multiple simultaneous NFC sessions
+    if (listenerRunning) return;
+
+    // Update state for both platforms
+    setState(() {
+      listenerRunning = true;
+    });
+
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      AppUtil.snackBar(
+          message: 'NFC listener running in background now, approach tag(s)');
     }
+
+    // Start NFC reading
+    _tagRead();
   }
 
   void _tagRead() {
@@ -164,7 +284,7 @@ class _NfcScanPageState extends State<NfcScanPage> {
             });
             //Create a 1Well known tag with en as language code and 0x02 encoding for UTF8
             final ndefRecord = NdefRecord.createText(_counter.toString());
-            //Create a new ndef message with a single record
+            //Create a new   message with a single record
             final ndefMessage = NdefMessage([ndefRecord]);
             //Write it to the tag, tag must still be "connected" to the device
             try {
@@ -216,7 +336,7 @@ class _NfcScanPageState extends State<NfcScanPage> {
                     MaterialPageRoute(
                         builder: (_) => EformPage(
                             kodeNfc: payload.toString(),
-                            eformBloc: widget.eformBloc,
+                            eformBloc: widget.eformBloc,  
                             authBloc: widget.authBloc)));
               }
             }
