@@ -82,8 +82,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             event.onFailed('Gagal mengimport data json');
             emitter(state.copyWith(status: AuthStatus.empty));
           }
-        }
-        else {
+        } else {
           event.onFailed('Tidak ada data yang tersimpan');
           emitter(state.copyWith(status: AuthStatus.empty));
         }
@@ -102,7 +101,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       User? user;
       for (var data in state.localUsers) {
-        if (data.username == event.username &&
+        if (data.username.toLowerCase() == event.username.toLowerCase() &&
+            // if (data.username == event.username &&
             data.password == AppUtil.generateMd5(event.password)) {
           user = data;
         }

@@ -254,7 +254,6 @@ class _NfcScanPageState extends State<NfcScanPage> {
     // Prevent multiple simultaneous NFC sessions
     if (listenerRunning) return;
 
-    // Update state for both platforms
     setState(() {
       listenerRunning = true;
     });
@@ -263,8 +262,6 @@ class _NfcScanPageState extends State<NfcScanPage> {
       AppUtil.snackBar(
           message: 'NFC listener running in background now, approach tag(s)');
     }
-
-    // Start NFC reading
     _tagRead();
   }
 
@@ -336,7 +333,7 @@ class _NfcScanPageState extends State<NfcScanPage> {
                     MaterialPageRoute(
                         builder: (_) => EformPage(
                             kodeNfc: payload.toString(),
-                            eformBloc: widget.eformBloc,  
+                            eformBloc: widget.eformBloc,
                             authBloc: widget.authBloc)));
               }
             }
@@ -347,6 +344,7 @@ class _NfcScanPageState extends State<NfcScanPage> {
       // Required for iOS to define what type of tags should be noticed
       pollingOptions: {
         NfcPollingOption.iso14443,
+        // NfcPollingOption.iso18092,
         NfcPollingOption.iso15693,
       },
     );
