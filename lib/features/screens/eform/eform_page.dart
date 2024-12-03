@@ -63,6 +63,8 @@ class _EformPageState extends State<EformPage> {
 
   @override
   Widget build(BuildContext context) {
+    // print(EformController.equipmentBloc.state);
+
     return Scaffold(
       appBar: appBar(),
       backgroundColor: kRedBgGrey,

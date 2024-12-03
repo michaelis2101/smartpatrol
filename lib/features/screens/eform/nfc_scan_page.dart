@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:smart_patrol/features/blocs/auth/auth_bloc.dart';
 import 'package:smart_patrol/features/screens/eform/eform_page.dart';
+import 'package:smart_patrol/utils/assets.dart';
 import 'package:smart_patrol/utils/utils.dart';
 
 import '../../../utils/styles/colors.dart';
@@ -64,6 +65,9 @@ class _NfcScanPageState extends State<NfcScanPage> {
               image: DecorationImage(
                   image: AssetImage("assets/img/bg_nfc.png"),
                   fit: BoxFit.fill)),
+          // image: DecorationImage(
+          //     image: AssetImage("assets/img/bg_nfc.png"),
+          //     fit: BoxFit.fill)),
           child: _checkIsNfcAvailable()),
     );
   }
@@ -265,99 +269,227 @@ class _NfcScanPageState extends State<NfcScanPage> {
     _tagRead();
   }
 
+  // void _tagRead() {
+  //   NfcManager.instance.startSession(onDiscovered: (NfcTag tag) {
+  //     var ndef = Ndef.from(tag);
+
+  //     print(ndef?.cachedMessage?.records.first.payload.first.toString());
+
+  //     if (ndef != null && ndef.cachedMessage != null) {
+  //       String tempRecord = "";
+  //       for (var record in ndef.cachedMessage!.records) {
+  //         tempRecord =
+  //             "$tempRecord ${String.fromCharCodes(record.payload.sublist(record.payload[0] + 1))}";
+  //       }
+
+  //       print(tempRecord);
+
+  //     } else {
+  //       // Show a snackbar for example
+  //     }
+  //   });
+  // }
   void _tagRead() {
-    NfcManager.instance.startSession(
-      onDiscovered: (NfcTag tag) async {
-        bool success = false;
-        //Try to convert the raw tag data to NDEF
-        final ndefTag = Ndef.from(tag);
-        //If the data could be converted we will get an object
-        if (ndefTag != null) {
-          // If we want to write the current counter vlaue we will replace the current content on the tag
-          if (writeCounterOnNextContact) {
-            //Ensure the write flag is off again
-            setState(() {
-              writeCounterOnNextContact = false;
-            });
-            //Create a 1Well known tag with en as language code and 0x02 encoding for UTF8
-            final ndefRecord = NdefRecord.createText(_counter.toString());
-            //Create a new   message with a single record
-            final ndefMessage = NdefMessage([ndefRecord]);
-            //Write it to the tag, tag must still be "connected" to the device
-            try {
-              //Any existing content will be overrwirten
-              await ndefTag.write(ndefMessage);
-              // _alert('Counter written to tag');
-              success = true;
-            } catch (e) {
-              // _alert("Writting failed, press 'Write to tag' again");
+    NfcManager.instance.startSession(onDiscovered: (NfcTag badge) async {
+      try {
+        var ndef = Ndef.from(badge);
+        if (ndef != null && ndef.cachedMessage != null) {
+          // String tempRecord = "";
+          // for (var record in ndef.cachedMessage!.records) {
+          //   tempRecord =
+          //       "$tempRecord ${String.fromCharCodes(record.payload.sublist(record.payload[0] + 1))}";
+          // }
+
+          final wellKnownRecord = ndef.cachedMessage!.records.first;
+          print("wellknown record : $wellKnownRecord");
+
+          print("is UTF8 : ${wellKnownRecord.payload.first == 0x02}");
+          // print("is UTF8 : ${wellKnownRecord.payload.first == 0x02}");
+
+          if (wellKnownRecord.payload.first == 0x02) {
+            final languageCodeAndContentBytes =
+                wellKnownRecord.payload.skip(1).toList();
+            print(
+                " languageCodeAndContentBytes : $languageCodeAndContentBytes");
+
+            final languageCodeAndContentText =
+                utf8.decode(languageCodeAndContentBytes);
+            print("languageCodeAndContentText : $languageCodeAndContentText");
+
+            final payload = languageCodeAndContentText.substring(2);
+            print("payload : $payload");
+            if (payload.isNotEmpty) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => EformPage(
+                          kodeNfc: payload.toString(),
+                          eformBloc: widget.eformBloc,
+                          authBloc: widget.authBloc)));
             }
           }
-          //The NDEF Message was already parsed, if any
-          else if (ndefTag.cachedMessage != null) {
-            var ndefMessage = ndefTag.cachedMessage!;
-            //Each NDEF message can have multiple records, we will use the first one in our example
-            if (ndefMessage.records.isNotEmpty &&
-                ndefMessage.records.first.typeNameFormat ==
-                    NdefTypeNameFormat.nfcWellknown) {
-              //If the first record exists as 1:Well-Known we consider this tag as having a value for us
-              final wellKnownRecord = ndefMessage.records.first;
-
-              ///Payload for a 1:Well Known text has the following format:
-              ///[Encoding flag 0x02 is UTF8][ISO language code like en][content]
-
-              if (wellKnownRecord.payload.first == 0x02) {
-                //Now we know the encoding is UTF8 and we can skip the first byte
-                final languageCodeAndContentBytes =
-                    wellKnownRecord.payload.skip(1).toList();
-                //Note that the language code can be encoded in ASCI, if you need it be carfully with the endoding
-                final languageCodeAndContentText =
-                    utf8.decode(languageCodeAndContentBytes);
-                //Cutting of the language code
-                final payload = languageCodeAndContentText.substring(2);
-                //Parsing the content to int
-                // final storedCounters = int.tryParse(payload);
-                success = true;
-                setState(() {
-                  _counter = 0;
-                  listenerRunning = false;
-                });
-                try {
-                  NfcManager.instance.stopSession();
-                } catch (_) {
-                  //We dont care
-                }
-
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => EformPage(
-                            kodeNfc: payload.toString(),
-                            eformBloc: widget.eformBloc,
-                            authBloc: widget.authBloc)));
-              }
-            }
-          }
+        } else {
+          // Show a snackbar for example
         }
-        // Required for iOS to define what type of tags should be noticed
-      },
-      // Required for iOS to define what type of tags should be noticed
-      pollingOptions: {
-        NfcPollingOption.iso14443,
-        // NfcPollingOption.iso18092,
-        NfcPollingOption.iso15693,
-      },
-    );
+      } catch (e) {
+        print(e);
+      } finally {
+        NfcManager.instance.stopSession();
+      }
+
+      // NfcManager.instance.stopSession();
+    });
   }
+
+  // void _tagRead() {
+  //   NfcManager.instance.startSession(
+  //     onDiscovered: (NfcTag tag) async {
+  //       bool success = false;
+  //       //Try to convert the raw tag data to NDEF
+  //       final ndefTag = Ndef.from(tag);
+  //       print(
+  //           "Payload : ${ndefTag!.cachedMessage?.records.first.payload.first.toString()}");
+  //       //If the data could be converted we will get an object
+  //       if (ndefTag != null) {
+  //         // If we want to write the current counter vlaue we will replace the current content on the tag
+  //         if (writeCounterOnNextContact) {
+  //           //Ensure the write flag is off again
+  //           setState(() {
+  //             writeCounterOnNextContact = false;
+  //           });
+  //           //Create a 1Well known tag with en as language code and 0x02 encoding for UTF8
+  //           final ndefRecord = NdefRecord.createText(_counter.toString());
+  //           //Create a new   message with a single record
+  //           final ndefMessage = NdefMessage([ndefRecord]);
+  //           //Write it to the tag, tag must still be "connected" to the device
+  //           try {
+  //             //Any existing content will be overrwirten
+  //             await ndefTag.write(ndefMessage);
+  //             // _alert('Counter written to tag');
+  //             success = true;
+  //           } catch (e) {
+  //             // _alert("Writting failed, press 'Write to tag' again");
+  //           }
+  //         }
+  //         //The NDEF Message was already parsed, if any
+  //         else if (ndefTag.cachedMessage != null) {
+  //           var ndefMessage = ndefTag.cachedMessage!;
+  //           //Each NDEF message can have multiple records, we will use the first one in our example
+  //           print(
+  //               "Payload : ${ndefMessage.records.first.payload.first.toString()}");
+  //           if (ndefMessage.records.isNotEmpty &&
+  //               ndefMessage.records.first.typeNameFormat ==
+  //                   NdefTypeNameFormat.nfcWellknown) {
+  //             //If the first record exists as 1:Well-Known we consider this tag as having a value for us
+  //             final wellKnownRecord = ndefMessage.records.first;
+
+  //             print("Payload : ${wellKnownRecord.payload.first.toString()}");
+
+  //             ///Payload for a 1:Well Known text has the following format:
+  //             ///[Encoding flag 0x02 is UTF8][ISO language code like en][content]
+
+  //             if (wellKnownRecord.payload.first == 0x02) {
+  //               //Now we know the encoding is UTF8 and we can skip the first byte
+  //               final languageCodeAndContentBytes =
+  //                   wellKnownRecord.payload.skip(1).toList();
+  //               //Note that the language code can be encoded in ASCI, if you need it be carfully with the endoding
+  //               final languageCodeAndContentText =
+  //                   utf8.decode(languageCodeAndContentBytes);
+  //               //Cutting of the language code
+  //               final payload = languageCodeAndContentText.substring(2);
+  //               //Parsing the content to int
+  //               // final storedCounters = int.tryParse(payload);
+  //               success = true;
+  //               setState(() {
+  //                 _counter = 0;
+  //                 listenerRunning = false;
+  //               });
+  //               try {
+  //                 NfcManager.instance.stopSession();
+  //               } catch (_) {
+  //                 //We dont care
+  //               }
+
+  //               Navigator.push(
+  //                   context,
+  //                   MaterialPageRoute(
+  //                       builder: (_) => EformPage(
+  //                           kodeNfc: payload.toString(),
+  //                           eformBloc: widget.eformBloc,
+  //                           authBloc: widget.authBloc)));
+  //             }
+  //           }
+  //         }
+  //       }
+  //       // Required for iOS to define what type of tags should be noticed
+  //     },
+  //     // Required for iOS to define what type of tags should be noticed
+  //     pollingOptions: {
+  //       NfcPollingOption.iso14443,
+  //       // NfcPollingOption.iso18092,
+  //       NfcPollingOption.iso15693,
+  //     },
+  //   );
+  // }
+
+  // void _tagRead() {
+  //   NfcManager.instance.startSession(
+  //     onDiscovered: (NfcTag tag) async {
+  //       print(tag.data);
+  //       try {
+  //         final ndefTag = Ndef.from(tag);
+  //         if (ndefTag == null || ndefTag.cachedMessage == null) {
+  //           print("No NDEF data found on the tag.");
+  //           return;
+  //         }
+
+  //         final ndefMessage = ndefTag.cachedMessage!;
+  //         final wellKnownRecord = ndefMessage.records.first;
+
+  //         if (wellKnownRecord.typeNameFormat ==
+  //                 NdefTypeNameFormat.nfcWellknown &&
+  //             wellKnownRecord.payload.isNotEmpty &&
+  //             wellKnownRecord.payload.first == 0x02) {
+  //           final languageCodeAndContentBytes =
+  //               wellKnownRecord.payload.skip(1).toList();
+  //           final languageCodeAndContentText =
+  //               utf8.decode(languageCodeAndContentBytes);
+  //           final payload = languageCodeAndContentText.substring(2);
+  //           print("Decoded Payload: $payload");
+
+  //           await NfcManager.instance.stopSession();
+  //           listenerRunning = false;
+
+  //           Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                   builder: (_) => EformPage(
+  //                         kodeNfc: payload,
+  //                         eformBloc: widget.eformBloc,
+  //                         authBloc: widget.authBloc,
+  //                       )));
+  //         } else {
+  //           print("Invalid record format or payload.");
+  //         }
+  //       } catch (e) {
+  //         print("Error reading NFC tag: $e");
+  //       }
+  //     },
+  //     pollingOptions: {
+  //       NfcPollingOption.iso14443,
+  //       NfcPollingOption.iso15693,
+  //     },
+  //   );
+  // }
 
   @override
   void dispose() {
-    setState(() {
-      _counter = 0;
-      listenerRunning = false;
-    });
     try {
-      NfcManager.instance.stopSession();
+      setState(() {
+        _counter = 0;
+        listenerRunning = false;
+      });
+      // NfcManager.instance.stopSession();
     } catch (_) {
       //We dont care
     }
