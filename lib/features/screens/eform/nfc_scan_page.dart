@@ -294,23 +294,16 @@ class _NfcScanPageState extends State<NfcScanPage> {
       try {
         var ndef = Ndef.from(badge);
         if (ndef != null && ndef.cachedMessage != null) {
-          // String tempRecord = "";
-          // for (var record in ndef.cachedMessage!.records) {
-          //   tempRecord =
-          //       "$tempRecord ${String.fromCharCodes(record.payload.sublist(record.payload[0] + 1))}";
-          // }
-
           final wellKnownRecord = ndef.cachedMessage!.records.first;
           print("wellknown record : $wellKnownRecord");
 
           print("is UTF8 : ${wellKnownRecord.payload.first == 0x02}");
-          // print("is UTF8 : ${wellKnownRecord.payload.first == 0x02}");
-
+          
           if (wellKnownRecord.payload.first == 0x02) {
             final languageCodeAndContentBytes =
                 wellKnownRecord.payload.skip(1).toList();
             print(
-                " languageCodeAndContentBytes : $languageCodeAndContentBytes");
+                "languageCodeAndContentBytes : $languageCodeAndContentBytes");
 
             final languageCodeAndContentText =
                 utf8.decode(languageCodeAndContentBytes);
