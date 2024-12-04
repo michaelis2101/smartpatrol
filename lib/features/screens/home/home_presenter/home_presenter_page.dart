@@ -59,76 +59,134 @@ class _HomePresenterPageState extends State<HomePresenterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: containerToolbarDecoration,
-          padding: const EdgeInsetsDirectional.only(top: 45),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  //logo itasoft
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0, left: 8),
-                    child: Container(
-                        // borderRadius: BorderRadius.circular(8),
-                        width: 64,
-                        child: Image.asset(
-                          'assets/img/logoitasoft2020white.png',
-                        )),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 12),
-                    child: Text(
-                      appName.toUpperCase(),
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-              OfflineBuilder(
-                  debounceDuration: Duration.zero,
-                  connectivityBuilder: (
-                    BuildContext context,
-                    ConnectivityResult connectivity,
-                    Widget child,
-                  ) {
-                    final bool connected =
-                        connectivity != ConnectivityResult.none;
-                    String infoStatus = connected ? 'Online' : 'Offline';
-                    Color infoStatusColor = connected ? kGreyLight : kGreen;
-                    if (connectivity == ConnectivityResult.none) {
-                      return const WidgetToolbarStatusPage(
-                          appName: appName,
-                          isOnline: false,
-                          showIconCalendar: false);
-                    } else {
-                      return child;
-                    }
-                  },
-                  builder: (BuildContext context) {
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Image.asset(
+              'assets/img/logoitasoft2020white.png',
+              fit: BoxFit.contain,
+              // height: 50,
+              // width: 50,
+              scale: 1.5,
+            ),
+          ),
+          title: Container(
+            // padding: const EdgeInsets.only(left: 12),
+            child: Text(
+              appName.toUpperCase(),
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          actions: [
+            OfflineBuilder(
+                debounceDuration: Duration.zero,
+                connectivityBuilder: (
+                  BuildContext context,
+                  ConnectivityResult connectivity,
+                  Widget child,
+                ) {
+                  final bool connected =
+                      connectivity != ConnectivityResult.none;
+                  String infoStatus = connected ? 'Online' : 'Offline';
+                  Color infoStatusColor = connected ? kGreyLight : kGreen;
+                  if (connectivity == ConnectivityResult.none) {
                     return const WidgetToolbarStatusPage(
                         appName: appName,
-                        isOnline: true,
+                        isOnline: false,
                         showIconCalendar: false);
-                  }),
+                  } else {
+                    return child;
+                  }
+                },
+                builder: (BuildContext context) {
+                  return const WidgetToolbarStatusPage(
+                      appName: appName,
+                      isOnline: true,
+                      showIconCalendar: false);
+                }),
+          ],
+          centerTitle: true,
+          // backgroundColor: LinearGradient(colors: [
+          //   kBlueTealPrimary,
+          //   kGreenPrimary,
+          // ]),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          flexibleSpace: Container(
+            decoration: containerToolbarDecoration,
+          )
+          // backgroundColor: Colors.transparent,
+          // elevation: 0,
+          // flexibleSpace: Container(
+          //   decoration: containerToolbarDecoration,
+          //   padding: const EdgeInsetsDirectional.only(top: 45),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Row(
+          //         crossAxisAlignment: CrossAxisAlignment.center,
+          //         mainAxisAlignment: MainAxisAlignment.start,
+          //         children: [
+          //           //logo itasoft
+          //           // Padding(
+          //           //   padding: const EdgeInsets.only(bottom: 8.0, left: 8),
+          //           //   child: Container(
+          //           //       // borderRadius: BorderRadius.circular(8),
+          //           //       width: 64,
+          //           //       child: Image.asset(
+          //           //         'assets/img/logoitasoft2020white.png',
+          //           //       )),
+          //           // ),
+          //           // Container(
+          //           //   padding: const EdgeInsets.only(left: 12),
+          //           //   child: Text(
+          //           //     appName.toUpperCase(),
+          //           //     style: const TextStyle(
+          //           //         color: Colors.white,
+          //           //         fontSize: 16,
+          //           //         fontWeight: FontWeight.bold),
+          //           //   ),
+          //           // ),
+          //         ],
+          //       ),
+          //       // OfflineBuilder(
+          //       //     debounceDuration: Duration.zero,
+          //       //     connectivityBuilder: (
+          //       //       BuildContext context,
+          //       //       ConnectivityResult connectivity,
+          //       //       Widget child,
+          //       //     ) {
+          //       //       final bool connected =
+          //       //           connectivity != ConnectivityResult.none;
+          //       //       String infoStatus = connected ? 'Online' : 'Offline';
+          //       //       Color infoStatusColor = connected ? kGreyLight : kGreen;
+          //       //       if (connectivity == ConnectivityResult.none) {
+          //       //                 return const WidgetToolbarStatusPage(
+          //       //             appName: appName,
+          //       //             isOnline: false,
+          //       //             showIconCalendar: false);
+          //       //       } else {
+          //       //         return child;
+          //       //       }
+          //       //     },
+          //       //     builder: (BuildContext context) {
+          //       //       return const WidgetToolbarStatusPage(
+          //       //           appName: appName,
+          //       //           isOnline: true,
+          //       //           showIconCalendar: false);
+          //       //     }),
 
-              //  const Row(
-              //   children: [
-              //     WidgetToolbarStatusPage(appName, true)
-              //   ],
-              // )
-            ],
+          //       //  const Row(
+          //       //   children: [
+          //       //     WidgetToolbarStatusPage(appName, true)
+          //       //   ],
+          //       // )
+          //     ],
+          // ),
+          // ),
           ),
-        ),
-      ),
       body: Stack(
         children: [
           Container(color: Colors.white),
