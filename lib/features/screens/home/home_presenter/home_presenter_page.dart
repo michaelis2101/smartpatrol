@@ -187,23 +187,27 @@ class _HomePresenterPageState extends State<HomePresenterPage> {
           // ),
           // ),
           ),
-      body: Stack(
-        children: [
-          Container(color: Colors.white),
-          SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  buildHeaderHome(),
-                  buildUserInfo(),
-                  buildWarningComponent(),
-                  buildContentList()
-                ],
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
+          children: [
+            Container(color: Colors.white),
+            SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    buildHeaderHome(),
+                    buildUserInfo(),
+                    buildWarningComponent(),
+                    buildContentList()
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -326,6 +330,7 @@ class _HomePresenterPageState extends State<HomePresenterPage> {
                         ),
                       ),
                       Container(
+                        // color: Colors.amber,
                         padding: const EdgeInsetsDirectional.symmetric(
                             horizontal: 10),
                         child: Row(
@@ -530,7 +535,7 @@ class _HomePresenterPageState extends State<HomePresenterPage> {
 
     return Container(
       width: double.infinity,
-      height: 399,
+      height: MediaQuery.of(context).size.height * 0.45,
       child: ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
@@ -540,7 +545,7 @@ class _HomePresenterPageState extends State<HomePresenterPage> {
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 150,
+              // height: 150,
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey, width: 1),
                   borderRadius: BorderRadius.circular(10),

@@ -11,3 +11,4 @@ const loginRoute = '/login';
 const importEformRoute = '/import_eform';
 const importShiftRoute = '/import_shift';
 const warningReportRoute = '/import_eform/warning';
+const historyRoute = '/history';

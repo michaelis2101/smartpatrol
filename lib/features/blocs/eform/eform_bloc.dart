@@ -106,7 +106,29 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
     on<SyncTransactionEvent>(_syncTransaction);
     on<SyncTransactionSpecialJobEvent>(_syncTransactionSpecial);
     on<GetTransactionHistoryByFormatEvent>(_getTrxHistoryByFormat);
+
+    on<CheckTransactionEvent>(_checkTransaction);
+    // on<SetFormatForDropdown>(_setFormatForDropdown);
+    // on<SetSelectedFormat>(_setSelectedFormat);
   }
+
+  // Future<void> _setSelectedFormat(
+  //     SetSelectedFormat event, Emitter<EFormState> emit) async {
+  //   emit(EFormState(selectedFormat: event.format));
+  // }
+
+  // Future<void> _setFormatForDropdown(
+  //     SetFormatForDropdown event, Emitter<EFormState> emit) async {
+  //   emit(EFormLoading());
+  //   final user = await DatabaseProvider.getSignedUserJson();
+  //   final formats = await DatabaseProvider.getFormatsJson();
+
+  //   if (formats.isNotEmpty) {
+  //     List<Formats> byDepartment =
+  //         formats.where((e) => e.department == user?.department).toList();
+  //     emit(state.copyWith(formats: byDepartment));
+  //   }
+  // }
 
   Future<void> _initEform(
       InitEFormEvent event, Emitter<EFormState> emitter) async {
@@ -460,7 +482,8 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
       final File? file = await AppUtil.readFile(['json']);
       if (file != null) {
         final fileRaw = file.readAsBytesSync();
-        String cleanFile = AppUtil.fixInvalidCharacters(utf8.decode(fileRaw, allowMalformed: true));
+        String cleanFile = AppUtil.fixInvalidCharacters(
+            utf8.decode(fileRaw, allowMalformed: true));
         final jsonFile = await json.decode(cleanFile);
         ServiceModel service = ServiceModel.fromJson(jsonFile);
         //validasi is spesial or not
@@ -908,6 +931,7 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
         }
         groupedData[name]?.add(item);
       }
+      // print();
       emitter(state.copyWith(transactionsHistoryManual: mt));
     }
   }
@@ -2428,13 +2452,6 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
             .where((e) => e.getShiftList().contains(user?.shift))
             .toList();
         for (var m in masterService) {
-         
-         
-         
-         
-         
-         
-         
           if (m.kodeEquipment == event.equipmentCode) {
             listService.add(m.copyWith(
                 checkBox: event.value == true ? 1 : 0,
@@ -2709,8 +2726,8 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
         }
       }
       if (foundMatch) {
-        listService.add(
-            m.copyWith(checkBox: event.value ? 1 : 0, textValue: true ? 'STOP' : ''));
+        listService.add(m.copyWith(
+            checkBox: event.value ? 1 : 0, textValue: true ? 'STOP' : ''));
       }
     }
     log("total add service $listService");
@@ -2762,7 +2779,6 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
     }
     // newTransactions.addAll(newData);
     log("trx todayFilterTrx $newTransactions");
-
 
     execute() async {
       AppUtil.showLoading();
@@ -2839,9 +2855,10 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
       add(const InitEFormEvent());
       Navigator.of(AppUtil.context!).pop();
     }
-    if(event.value) {
+
+    if (event.value) {
       execute();
-    }else{
+    } else {
       AppUtil.showLoading();
       await DatabaseProvider.putTransactionJson(newTransactions);
       add(const InitEFormEvent());
@@ -3828,6 +3845,71 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
     }
   }
 
+  Future<void> _checkTransaction(
+      CheckTransactionEvent event, Emitter<EFormState> emitter) async {
+    emitter(EFormLoading());
+    final trx = await DatabaseProvider.getTransactionJson();
+    final user = await DatabaseProvider.getSignedUserJson();
+
+    var now = DateTime.now();
+
+    List<Transaction> transactions = [];
+
+    if (trx.transactions.isNotEmpty) {
+      if (state.tglPatrol.isNotEmpty) {
+        transactions.addAll(trx.transactions
+            .where((element) =>
+                (AppUtil.defaultTimeFormatCustom(
+                        DateTime.parse(element.dateCreated), "yyyy-MM-dd") ==
+                    state.tglPatrol) &&
+                element.userId == user!.nik &&
+                element.shift == user.shift &&
+                element.patrol == user.patrol &&
+                element.dateCreated.contains(now.toString().substring(0, 10)))!
+            .toList());
+        print('tgl patrol not empty');
+
+        // print(transactions.first.toJson());
+        // print(transactions.length);
+      } else {
+        transactions.addAll(trx.transactions
+            .where((e) =>
+                (AppUtil.defaultTimeFormatCustom(
+                        DateTime.parse(e.dateCreated), "yyyy-MM-dd") ==
+                    AppUtil.defaultTimeFormatCustom(now, "yyyy-MM-dd")) &&
+                e.patrol == user!.patrol &&
+                e.userId == user.nik &&
+                e.shift == user.shift)
+            .toList());
+        print('tgl patrol empty');
+
+        // print(transactions);
+        // // print(transactions.first.toJson());
+        print(transactions.length);
+      }
+
+      Map<String, List<dynamic>> groupedData = {};
+      TransactionModel mt =
+          TransactionModel(transactions: transactions.toSet().toList());
+      print(mt.runtimeType.toString());
+      log(mt.toJson().toString());
+      emitter(state.copyWith(transactionsHistoryManual: mt));
+
+      // print(
+      //     state.transactionsHistoryManual.transactions.runtimeType.toString());
+      // print('mt : ${mt.toJson()}');
+    }
+
+    // if (state.transactions.transactions.isNotEmpty) {
+    //   int length = state.transactions.transactions.length;
+    //   print(length.toString());
+    //   print(state.transactions.transactions);
+    //   AppUtil.snackBar(message: length.toString());
+    // } else {
+    //   print('kosong');
+    // }
+  }
+
   Future<void> _syncTransaction(
       SyncTransactionEvent event, Emitter<EFormState> emitter) async {
     AppUtil.showLoading();
@@ -3936,8 +4018,11 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
           );
           log("sync to server ${event.urlServer.toString()}$urlSync?form=standart");
           log(mdata.toJson().toString());
-          Response response = await dio.post("${event.urlServer.toString()}$urlSync?form=standart",
-              data: mdata.toJson(), options: options);
+          Response response = await dio.post(
+              "${event.urlServer.toString()}$urlSync?form=standart",
+              data: mdata.toJson(),
+              options: options);
+          print(mdata.toJson().toString());
           // Check the response status
           if (response.statusCode == 200) {
             print('POST sync request successful!');
@@ -4093,8 +4178,10 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
           },
         );
         log(mdata.toJson().toString());
-        Response response = await dio.post("${event.urlServer.toString()}$urlSync?form=special",
-            data: mdata.toJson(), options: options);
+        Response response = await dio.post(
+            "${event.urlServer.toString()}$urlSync?form=special",
+            data: mdata.toJson(),
+            options: options);
         // Check the response status
         if (response.statusCode == 200) {
           print('POST sync request successful!');

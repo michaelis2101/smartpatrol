@@ -1,41 +1,43 @@
 part of 'eform_bloc.dart';
 
 class EFormState extends Equatable {
-  const EFormState(
-      {this.status = EFormStatus.initial,
-      this.section = const [],
-      this.sectionByFormat = const [],
-      this.formats = const [],
-      this.areas = const [],
-      this.areasBySection = const [],
-      this.cpls = const [],
-      this.kodeSection = '',
-      this.kodeArea = '',
-      this.kodeCpl = '',
-      this.kodeNfc = '',
-      this.tglPatrol = '',
-      this.kodeEquipment = '',
-      this.cplsByArea = const [],
-      this.equipments = const [],
-      this.equipmentsByCpl = const [],
-      this.equipmentsByNfc = const [],
-      this.services = const [],
-      this.servicesByStep = const [],
-      this.servicesBySearch = const [],
-      this.servicesByEquipment = const [],
-      this.autonomousService = const [],
-      this.autonomousCpl = const [],
-      this.autonomousEquipment = const [],
-      this.specialJobCpl = const [],
-      this.specialJobForm = const [],
-      this.specialJobPosition = const [],
-      this.transactions = const TransactionModel(transactions: []),
-      this.transactionsSpecialJob = const TransactionModel(transactions: []),
-      this.transactionsHistoryManual = const TransactionModel(transactions: []),
-      this.transactionsHistorySpecial = const TransactionModel(transactions: []),
-      this.nfcIsAvailable = false,
-      this.steps = '',
-      this.currentStep = 0});
+  const EFormState({
+    this.status = EFormStatus.initial,
+    this.section = const [],
+    this.sectionByFormat = const [],
+    this.formats = const [],
+    this.areas = const [],
+    this.areasBySection = const [],
+    this.cpls = const [],
+    this.kodeSection = '',
+    this.kodeArea = '',
+    this.kodeCpl = '',
+    this.kodeNfc = '',
+    this.tglPatrol = '',
+    this.kodeEquipment = '',
+    this.cplsByArea = const [],
+    this.equipments = const [],
+    this.equipmentsByCpl = const [],
+    this.equipmentsByNfc = const [],
+    this.services = const [],
+    this.servicesByStep = const [],
+    this.servicesBySearch = const [],
+    this.servicesByEquipment = const [],
+    this.autonomousService = const [],
+    this.autonomousCpl = const [],
+    this.autonomousEquipment = const [],
+    this.specialJobCpl = const [],
+    this.specialJobForm = const [],
+    this.specialJobPosition = const [],
+    this.transactions = const TransactionModel(transactions: []),
+    this.transactionsSpecialJob = const TransactionModel(transactions: []),
+    this.transactionsHistoryManual = const TransactionModel(transactions: []),
+    this.transactionsHistorySpecial = const TransactionModel(transactions: []),
+    this.nfcIsAvailable = false,
+    this.steps = '',
+    this.currentStep = 0,
+    // this.selectedFormat = '',
+  });
 
   final EFormStatus status;
   final List<Section> section;
@@ -47,7 +49,7 @@ class EFormState extends Equatable {
   final String kodeCpl;
   final String kodeNfc;
   final String kodeEquipment;
-  final String steps,tglPatrol;
+  final String steps, tglPatrol;
   final int currentStep;
   final List<Cpl> cpls;
   final List<Cpl> cplsByArea;
@@ -55,7 +57,7 @@ class EFormState extends Equatable {
   final List<Equipment> equipmentsByCpl;
   final List<Equipment> equipmentsByNfc;
   final List<Service> services;
-  final List<Service> servicesBySearch;//untuk eform manual search
+  final List<Service> servicesBySearch; //untuk eform manual search
   final List<Service> servicesByEquipment;
   final List<Service> servicesByStep;
   final List<Equipment> autonomousEquipment;
@@ -70,40 +72,46 @@ class EFormState extends Equatable {
   final TransactionModel transactionsHistorySpecial;
 
   final bool nfcIsAvailable;
+  // final String? selectedFormat;
 
-  EFormState copyWith(
-      {EFormStatus? status,
-      List<Section>? section,
-      List<Section>? sectionByFormat,
-      List<Formats>? formats,
-      List<Area>? areas,
-      List<Area>? areasBySection,
-      String? kodeArea,
-      String? kodeSection,
-      String? kodeCpl,
-      String? kodeNfc,
-      String? tglPatrol,
-      String? kodeEquipment,
-      List<Cpl>? cpls,
-      List<Cpl>? cplsByArea,
-      List<Equipment>? equipments,
-      List<Equipment>? equipmentsByCpl,
-      List<Equipment>? equipmentsByNfc,
-      List<Service>? services,
-      List<Service>? servicesByEquipment,
-      List<Service>? servicesBySearch,
-      List<Service>? servicesByStep,
-      List<Equipment>? autonomousEquipment,
-      List<Service>? autonomousService,
-      List<Cpl>? autonomousCpl,
-      List<Cpl>? specialJobCpl,
-      List<Position>? specialJobPosition,
-      List<SpecialJob>? specialJobForm,
-      TransactionModel? transactions,
-      TransactionModel? transactionsSpecialJob,transactionsHistorySpecial,transactionsHistoryManual,
-      bool? nfcIsAvailable,
-      String? steps,
-      int? currentStep}) {
+  EFormState copyWith({
+    EFormStatus? status,
+    List<Section>? section,
+    List<Section>? sectionByFormat,
+    List<Formats>? formats,
+    List<Area>? areas,
+    List<Area>? areasBySection,
+    String? kodeArea,
+    String? kodeSection,
+    String? kodeCpl,
+    String? kodeNfc,
+    String? tglPatrol,
+    String? kodeEquipment,
+    List<Cpl>? cpls,
+    List<Cpl>? cplsByArea,
+    List<Equipment>? equipments,
+    List<Equipment>? equipmentsByCpl,
+    List<Equipment>? equipmentsByNfc,
+    List<Service>? services,
+    List<Service>? servicesByEquipment,
+    List<Service>? servicesBySearch,
+    List<Service>? servicesByStep,
+    List<Equipment>? autonomousEquipment,
+    List<Service>? autonomousService,
+    List<Cpl>? autonomousCpl,
+    List<Cpl>? specialJobCpl,
+    List<Position>? specialJobPosition,
+    List<SpecialJob>? specialJobForm,
+    TransactionModel? transactions,
+    TransactionModel? transactionsSpecialJob,
+    transactionsHistorySpecial,
+    TransactionModel? transactionsHistoryManual,
+    // transactionsHistoryManual,
+    bool? nfcIsAvailable,
+    String? steps,
+    int? currentStep,
+    // String? selectedFormat
+  }) {
     return EFormState(
       status: status ?? this.status,
       formats: formats ?? this.formats,
@@ -132,13 +140,17 @@ class EFormState extends Equatable {
       specialJobPosition: specialJobPosition ?? this.specialJobPosition,
       specialJobForm: specialJobForm ?? this.specialJobForm,
       transactions: transactions ?? this.transactions,
-      transactionsSpecialJob: transactionsSpecialJob ?? this.transactionsSpecialJob,
-      transactionsHistoryManual: transactionsHistoryManual ?? this.transactionsHistoryManual,
-      transactionsHistorySpecial: transactionsHistorySpecial ?? this.transactionsHistorySpecial,
+      transactionsSpecialJob:
+          transactionsSpecialJob ?? this.transactionsSpecialJob,
+      transactionsHistoryManual:
+          transactionsHistoryManual ?? this.transactionsHistoryManual,
+      transactionsHistorySpecial:
+          transactionsHistorySpecial ?? this.transactionsHistorySpecial,
       nfcIsAvailable: nfcIsAvailable ?? this.nfcIsAvailable,
       steps: steps ?? this.steps,
       currentStep: currentStep ?? this.currentStep,
       areasBySection: areasBySection ?? this.areasBySection,
+      // selectedFormat: selectedFormat ?? this.selectedFormat
     );
   }
 
@@ -174,8 +186,12 @@ class EFormState extends Equatable {
         nfcIsAvailable,
         transactions,
         transactionsSpecialJob,
-        transactionsHistorySpecial,transactionsHistoryManual,
+        transactionsHistorySpecial,
+        transactionsHistoryManual,
         steps,
-        currentStep
+        currentStep,
+        // selectedFormat
       ];
 }
+
+class EFormLoading extends EFormState {}

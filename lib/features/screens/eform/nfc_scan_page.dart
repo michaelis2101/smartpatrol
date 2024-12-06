@@ -298,12 +298,11 @@ class _NfcScanPageState extends State<NfcScanPage> {
           print("wellknown record : $wellKnownRecord");
 
           print("is UTF8 : ${wellKnownRecord.payload.first == 0x02}");
-          
+
           if (wellKnownRecord.payload.first == 0x02) {
             final languageCodeAndContentBytes =
                 wellKnownRecord.payload.skip(1).toList();
-            print(
-                "languageCodeAndContentBytes : $languageCodeAndContentBytes");
+            print("languageCodeAndContentBytes : $languageCodeAndContentBytes");
 
             final languageCodeAndContentText =
                 utf8.decode(languageCodeAndContentBytes);

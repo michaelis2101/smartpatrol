@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:smart_patrol/dummy/view/dummy_history_page.dart';
 import 'package:smart_patrol/features/blocs/auth/auth_bloc.dart';
 import 'package:smart_patrol/features/blocs/eform/eform_bloc.dart';
 import 'package:smart_patrol/features/screens/auth/init_page.dart';
@@ -52,6 +53,11 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [routeObserver],
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
+          case historyRoute:
+            return MaterialPageRoute(
+                builder: (_) => DummyHistoryPage(
+                    authBloc: (settings.arguments as List)[0] as AuthBloc,
+                    eformBloc: (settings.arguments as List)[1] as EFormBloc));
           case homeRoute:
             return MaterialPageRoute(
                 builder: (_) =>

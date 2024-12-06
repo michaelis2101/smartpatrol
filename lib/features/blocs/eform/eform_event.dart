@@ -528,11 +528,14 @@ class SetDatePatrol extends EFormEvent {
 
 class SaveAllStopEFormTransactionEvent extends EFormEvent {
   final Function? onFinish;
-  final bool verify,value;
+  final bool verify, value;
   final List<Equipment>? equipmentsByCpl;
 
   const SaveAllStopEFormTransactionEvent(
-      {this.onFinish, this.verify = true, this.value=false,this.equipmentsByCpl});
+      {this.onFinish,
+      this.verify = true,
+      this.value = false,
+      this.equipmentsByCpl});
 }
 
 class SaveNewEFormTransactionEvent extends EFormEvent {
@@ -606,7 +609,7 @@ class PostTransactionEvent extends EFormEvent {
 }
 
 class SyncTransactionEvent extends EFormEvent {
-  final String userId, uName, nik, department, nama, shift, urlServer,api_id;
+  final String userId, uName, nik, department, nama, shift, urlServer, api_id;
   final int patrol;
 
   const SyncTransactionEvent(
@@ -617,12 +620,25 @@ class SyncTransactionEvent extends EFormEvent {
       required this.department,
       required this.shift,
       required this.patrol,
-      required  this.urlServer,
-        required  this.api_id});
+      required this.urlServer,
+      required this.api_id});
 }
 
+class CheckTransactionEvent extends EFormEvent {
+  const CheckTransactionEvent();
+}
+
+// class SetFormatForDropdown extends EFormEvent {
+//   const SetFormatForDropdown();
+// }
+
+// class SetSelectedFormat extends EFormEvent {
+//   final String format;
+//   const SetSelectedFormat({required this.format});
+// }
+
 class SyncTransactionSpecialJobEvent extends EFormEvent {
-  final String userId, uName, nik, department, nama, shift,urlServer,api_id;
+  final String userId, uName, nik, department, nama, shift, urlServer, api_id;
   final int patrol;
 
   const SyncTransactionSpecialJobEvent(

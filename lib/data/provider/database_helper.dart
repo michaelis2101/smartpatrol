@@ -695,6 +695,19 @@ class DatabaseProvider {
     }
   }
 
+  static Future<void> deleteTransactionJson() async {
+    try {
+      final db = await initialize();
+      await db.delete('transaction');
+    } catch (e, st) {
+      if (kDebugMode) {
+        log('Delete Transaction Json - Exception[e]: $e');
+        log('Delete Transaction Json - Exception[st]: $st');
+      }
+      rethrow;
+    }
+  }
+
   static Future<TransactionModel> getTransactionJson() async {
     try {
       final db = await initialize();

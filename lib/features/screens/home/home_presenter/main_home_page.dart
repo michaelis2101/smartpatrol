@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smart_patrol/dummy/view/dummy_history_page.dart';
+import 'package:smart_patrol/dummy/view/dummy_page.dart';
 import 'package:smart_patrol/features/blocs/auth/auth_bloc.dart';
 import 'package:smart_patrol/features/blocs/eform/eform_bloc.dart';
 import 'package:smart_patrol/features/blocs/shift/shift_bloc.dart';
@@ -56,7 +57,8 @@ class _MainHomePageState extends State<MainHomePage> {
     _listWidget = [
       HomePresenterPage(authBloc: widget.authBloc, eformBloc: eformBloc),
       // HistoryPage(authBloc: widget.authBloc, eformBloc: eformBloc),
-      const DummyHistoryPage(),
+      // const DummyPage(),
+      DummyHistoryPage(authBloc: widget.authBloc, eformBloc: eformBloc),
       EformPage(kodeNfc: "", authBloc: widget.authBloc, eformBloc: eformBloc),
       SettingsPage(
         eformBloc: eformBloc,

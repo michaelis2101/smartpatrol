@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_patrol/features/screens/settings/settings_page.dart';
+import 'package:smart_patrol/utils/assets.dart';
 import 'package:smart_patrol/utils/constants.dart';
 import 'package:smart_patrol/utils/styles/text_styles.dart';
 
@@ -16,7 +17,7 @@ class AboutPage extends StatelessWidget {
             decoration: containerToolbarDecoration,
           ),
           title: const Text(
-            'About VCM Digitization',
+            'About Jagawara',
             style: kToolbarHeader,
           ),
           leading: IconButton(
@@ -36,11 +37,15 @@ class AboutPage extends StatelessWidget {
               child: Container(
                 color: Colors.white,
                 child: Center(
-                  child: Image.asset(
-                    'assets/img/logo_asahimas.png',
-                    width: 200,
-                  ),
-                ),
+                    child: Image.asset(
+                  ImageAssets.logoItasoft,
+                  width: 200,
+                )
+                    // child: Image.asset(
+                    //   'assets/img/logo_asahimas.png',
+                    //   width: 200,
+                    // ),
+                    ),
               ),
             ),
             const Center(
