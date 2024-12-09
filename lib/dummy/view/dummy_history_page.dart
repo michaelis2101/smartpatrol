@@ -9,6 +9,7 @@ import 'package:smart_patrol/features/blocs/eform/eform_bloc.dart';
 import 'package:smart_patrol/features/screens/home/widget/empty_state.dart';
 import 'package:smart_patrol/features/screens/settings/settings_page.dart';
 import 'package:smart_patrol/utils/styles/colors.dart';
+import 'package:smart_patrol/utils/styles/text_styles.dart';
 import 'package:smart_patrol/utils/utils.dart';
 
 class DummyHistoryPage extends StatefulWidget {
@@ -25,6 +26,7 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
   final srchCont = TextEditingController();
 
   List<DropdownMenuItem> formats = [];
+  String userName = '';
 
   // Future<void> getUserJson
 
@@ -68,6 +70,7 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
     try {
       widget.eformBloc.add(const CheckTransactionEvent());
       widget.eformBloc.add(const InitEFormEvent());
+      userName = widget.authBloc.state.signedUser!.name;
       // widget.eformBloc.add(const SetFormatForDropdown());
     } catch (e) {
       print(e);
@@ -205,6 +208,9 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
             textfieldSearch(),
             labelDropDown(),
             dropdownFormat(),
+            const SizedBox(
+              height: 10,
+            ),
             Expanded(
               child: TabBarView(children: [
                 listFloorWidget(),
@@ -243,36 +249,101 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
           return ListView.builder(
             itemCount: uniqueRooms.length,
             itemBuilder: (context, index) {
-              var keys = uniqueRooms.keys.toList();
-              var key = keys[index];
+              int warningCount = 0;
+              List<String> keys = uniqueRooms.keys.toList();
+              String key = keys[index];
 
-              var trxForRoom =
+              List<Transaction> trxForRoom =
                   data.where((trx) => trx.codeEquipment == key).toList();
 
               bool hasNegativeStatus = trxForRoom.any((trx) {
-                var valueOption = trx.textValue;
-                // Define negative meanings (e.g., "No", "ABNORMAL", etc.)
+                String valueOption = trx.textValue;
                 return valueOption == "No" || valueOption == "ABNORMAL";
               });
 
-              return ListTile(
-                title: Text(
-                  "$key (${uniqueRooms[key]})",
-                  style: const TextStyle(color: Colors.black),
-                ),
-                leading: hasNegativeStatus
-                    ? const Icon(Icons.warning,
-                        color:
-                            Colors.red) // Show warning if negative status found
-                    : null, // No icon if no negative status
-              );
+              for (var trx in trxForRoom) {
+                if (trx.textValue == "No" || trx.textValue == "ABNORMAL") {
+                  warningCount++;
+                }
+              }
 
-              // return ListTile(
-              //   title: Text(
-              //     "$key (${uniqueRooms[key]})",
-              //     style: const TextStyle(color: Colors.black),
-              //   ),
-              // );
+              return Column(
+                children: [
+                  ListTile(
+                    title: Text(
+                      "$key (${uniqueRooms[key]})",
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                    leading: hasNegativeStatus
+                        ? const Icon(Icons.circle_rounded, color: Colors.red)
+                        : const Icon(
+                            Icons.circle,
+                            color: kGreen,
+                          ),
+                    subtitle: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "OP : $userName",
+                          // data[index].userId,
+                          style: kSubtitle.copyWith(color: Colors.black),
+                        ),
+                        Text("Shift ${data[index].shift}",
+                            style: kSubtitle.copyWith(color: Colors.black)),
+
+                        Row(
+                          children: [
+                            hasNegativeStatus
+                                ? const Icon(Icons.warning, color: Colors.red)
+                                : const Icon(Icons.warning, color: kBlueAccent),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(warningCount.toString(),
+                                style: kSubtitle.copyWith(color: Colors.black)),
+                          ],
+                        ),
+                        // Divider(color: kRedBlack),
+                        // ...rooms.map((trx) {
+                        //   return ListTile(
+                        //     title: Text(
+                        //       trx.codeEquipmentName,
+                        //       style: const TextStyle(color: Colors.black),
+                        //     ),
+                        //     leading: const Icon(Icons.circle, color: kGreen),
+                        //   );
+                        // }).toList(),
+                      ],
+                    ),
+                    trailing: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                            AppUtil.defaultTimeFormatCustom(
+                                DateTime.parse(data[index].dateCreated),
+                                'EEEE'),
+                            style: kSubtitle.copyWith(color: Colors.black)),
+                        Text(
+                            AppUtil.defaultTimeFormatCustom(
+                                DateTime.parse(data[index].dateCreated),
+                                "dd-MM-yyyy"),
+                            style: kSubtitle.copyWith(color: Colors.black)),
+                        Text(
+                            AppUtil.defaultTimeFormatCustom(
+                                DateTime.parse(data[index].dateCreated),
+                                "HH:mm"),
+                            style: kSubtitle.copyWith(color: Colors.black)),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                    color: kRichBlack,
+                  ),
+                ],
+              );
             },
           );
         }
@@ -333,16 +404,92 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
             map[trx.codeCpl] = trx.codeCplName;
             return map;
           });
+
+          Map<String, String> uniqueRooms =
+              data.fold<Map<String, String>>({}, (map, trx) {
+            map[trx.codeEquipment] = trx.codeEquipmentName;
+            return map;
+          });
+
           return ListView.builder(
             itemCount: uniqueFloors.length,
             itemBuilder: (context, index) {
-              var keys = uniqueFloors.keys.toList();
-              var key = keys[index];
-              return ListTile(
-                title: Text(
-                  "$key (${uniqueFloors[key]})",
-                  style: const TextStyle(color: Colors.black),
-                ),
+              int warningCount = 0;
+              List<String> keys = uniqueFloors.keys.toList();
+              String key = keys[index];
+
+              String equipmentCode = uniqueRooms.keys.toList()[index];
+
+              List<Transaction> rooms = data
+                  .where((trx) => trx.codeEquipment == equipmentCode)
+                  .toList();
+
+              bool hasNegativeStatus = rooms.any((trx) {
+                var valueOption = trx.textValue;
+                return valueOption == "No" || valueOption == "ABNORMAL";
+              });
+
+              for (var room in rooms) {
+                if (room.textValue == "No" || room.textValue == "ABNORMAL") {
+                  warningCount++;
+                }
+              }
+
+              return Column(
+                children: [
+                  ListTile(
+                    leading: hasNegativeStatus
+                        ? const Icon(Icons.circle_rounded, color: Colors.red)
+                        : const Icon(
+                            Icons.circle,
+                            color: kGreen,
+                          ),
+                    title: Text(
+                      "$key (${uniqueFloors[key]})",
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "OP : $userName",
+                          // data[index].userId,
+                          style: kSubtitle.copyWith(color: Colors.black),
+                        ),
+                        Text("Shift ${data[index].shift}",
+                            style: kSubtitle.copyWith(color: Colors.black)),
+
+                        Row(
+                          children: [
+                            hasNegativeStatus
+                                ? const Icon(Icons.warning, color: Colors.red)
+                                : const Icon(Icons.check, color: kBlueAccent),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(warningCount.toString(),
+                                style: kSubtitle.copyWith(color: Colors.black)),
+                          ],
+                        ),
+
+                        // ...rooms.map((trx) {
+                        //   return ListTile(
+                        //     title: Text(
+                        //       trx.codeEquipmentName,
+                        //       style: const TextStyle(color: Colors.black),
+                        //     ),
+                        //     leading: const Icon(Icons.circle, color: kGreen),
+                        //   );
+                        // }).toList(),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                    color: kRichBlack,
+                  )
+                ],
               );
             },
           );
