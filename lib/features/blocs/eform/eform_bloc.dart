@@ -2900,7 +2900,7 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
       var uuid = const Uuid();
       var keyUUid = uuid.v8();
       for (var i in serviceByEquipment) {
-        var kodeCpl = state.equipments.firstWhere(
+        Equipment kodeCpl = state.equipments.firstWhere(
             (e) => e.kodeEquipment == i.kodeEquipment,
             orElse: () => const Equipment(to: ''));
 
@@ -2924,7 +2924,8 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
             (e) => e.id == dataArea.kodeSection,
             orElse: () => const Section());
 
-        var kodeFormat = kodeEquipment.tipeCpl;
+        var kodeFormat = event.formatId;
+        // var kodeFormat = kodeEquipment.tipeCpl;
         var dataFormat = state.formats.firstWhere((e) => e.id == kodeFormat,
             orElse: () => const Formats());
         String kodeAreaName =
@@ -3856,42 +3857,129 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
     List<Transaction> transactions = [];
 
     if (trx.transactions.isNotEmpty) {
+      // print(state.transactionsHistoryManual.transactions.first.codeCplName);
       if (state.tglPatrol.isNotEmpty) {
-        transactions.addAll(trx.transactions
-            .where((element) =>
-                (AppUtil.defaultTimeFormatCustom(
-                        DateTime.parse(element.dateCreated), "yyyy-MM-dd") ==
-                    state.tglPatrol) &&
-                element.userId == user!.nik &&
-                element.shift == user.shift &&
-                element.patrol == user.patrol &&
-                element.dateCreated.contains(now.toString().substring(0, 10)))!
-            .toList());
+        if (event.filterDropdown == "All") {
+          transactions.addAll(trx.transactions
+              .where((element) =>
+                  (AppUtil.defaultTimeFormatCustom(
+                          DateTime.parse(element.dateCreated), "yyyy-MM-dd") ==
+                      state.tglPatrol) &&
+                  element.userId == user!.nik &&
+                  element.shift == user.shift &&
+                  element.patrol == user.patrol &&
+                  element.dateCreated
+                      .contains(now.toString().substring(0, 10)))!
+              .toList());
+        } else {
+          transactions.addAll(trx.transactions
+              .where((element) =>
+                  (AppUtil.defaultTimeFormatCustom(
+                          DateTime.parse(element.dateCreated), "yyyy-MM-dd") ==
+                      state.tglPatrol) &&
+                  element.userId == user!.nik &&
+                  element.shift == user.shift &&
+                  element.patrol == user.patrol &&
+                  element.codeFormat
+                      .toLowerCase()
+                      .contains(event.filterDropdown.toLowerCase()))
+              .toList());
+        }
         print('tgl patrol not empty');
-
-        // print(transactions.first.toJson());
-        // print(transactions.length);
       } else {
-        transactions.addAll(trx.transactions
-            .where((e) =>
+        if (event.filterDropdown == "All") {
+          if (event.search.isEmpty) {
+            transactions.addAll(trx.transactions
+                .where((e) =>
+                    (AppUtil.defaultTimeFormatCustom(
+                            DateTime.parse(e.dateCreated), "yyyy-MM-dd") ==
+                        AppUtil.defaultTimeFormatCustom(now, "yyyy-MM-dd")) &&
+                    e.patrol == user!.patrol &&
+                    e.userId == user.nik &&
+                    e.shift == user.shift)
+                .toList());
+          } else {
+            transactions.addAll(trx.transactions.where((e) =>
                 (AppUtil.defaultTimeFormatCustom(
                         DateTime.parse(e.dateCreated), "yyyy-MM-dd") ==
                     AppUtil.defaultTimeFormatCustom(now, "yyyy-MM-dd")) &&
                 e.patrol == user!.patrol &&
                 e.userId == user.nik &&
-                e.shift == user.shift)
-            .toList());
-        print('tgl patrol empty');
+                e.shift == user.shift &&
+                (e.codeEquipment
+                        .toLowerCase()
+                        .contains(event.search.toLowerCase()) ||
+                    e.codeEquipmentName
+                        .toLowerCase()
+                        .contains(event.search.toLowerCase()) ||
+                    e.codeCpl
+                        .toLowerCase()
+                        .contains(event.search.toLowerCase()) ||
+                    e.codeCplName
+                        .toLowerCase()
+                        .contains(event.search.toLowerCase()) ||
+                    e.codeArea
+                        .toLowerCase()
+                        .contains(event.search.toLowerCase()) ||
+                    e.codeAreaName
+                        .toLowerCase()
+                        .contains(event.search.toLowerCase()) ||
+                    e.codeNfc
+                        .toLowerCase()
+                        .contains(event.search.toLowerCase()) ||
+                    e.serviceName
+                        .toLowerCase()
+                        .contains(event.search.toLowerCase()) ||
+                    e.textValue
+                        .toLowerCase()
+                        .contains(event.search.toLowerCase()))));
+          }
+        } else {
+          transactions.addAll(trx.transactions
+              .where((element) =>
+                  (AppUtil.defaultTimeFormatCustom(
+                          DateTime.parse(element.dateCreated), "yyyy-MM-dd") ==
+                      AppUtil.defaultTimeFormatCustom(now, "yyyy-MM-dd")) &&
+                  element.patrol == user!.patrol &&
+                  element.userId == user.nik &&
+                  element.shift == user.shift &&
+                  element.codeFormat
+                      .toLowerCase()
+                      .contains(event.filterDropdown.toLowerCase()))
+              .toList());
+        }
 
-        // print(transactions);
-        // // print(transactions.first.toJson());
-        print(transactions.length);
+        // if (event.search.isNotEmpty) {
+        //   transactions.addAll(trx.transactions.where((element) =>
+        //   (AppUtil.defaultTimeFormatCustom(DateTime.parse(element.dateCreated), "yyyy-MM-dd") == AppUtil.defaultTimeFormatCustom(now, "yyyy-MM-dd")) &&
+        //   element.patrol == user!.patrol &&
+        //           element.userId == user.nik &&
+        //           element.shift == user.shift &&
+        //   (
+        //     element.codeEquipment.toLowerCase().contains(event.search.toLowerCase()) ||
+        //     element.codeEquipmentName.toLowerCase().contains(event.search.toLowerCase()) ||
+        //     element.codeCpl.toLowerCase().contains(event.search.toLowerCase()) ||
+        //     element.codeCplName.toLowerCase().contains(event.search.toLowerCase()) ||
+        //     element.codeArea.toLowerCase().contains(event.search.toLowerCase()) ||
+        //     element.codeAreaName.toLowerCase().contains(event.search.toLowerCase()) ||
+        //     element.codeNfc.toLowerCase().contains(event.search.toLowerCase()) ||
+        //     element.serviceName.toLowerCase().contains(event.search.toLowerCase()) ||
+        //     element.textValue.toLowerCase().contains(event.search.toLowerCase()
+        //   )
+        //   )).toList());
+        // }
+        // print('tgl patrol empty');
+        // print(transactions.length);
       }
+
+      // if () {
+
+      // }
 
       Map<String, List<dynamic>> groupedData = {};
       TransactionModel mt =
           TransactionModel(transactions: transactions.toSet().toList());
-      print(mt.runtimeType.toString());
+      // print(mt.runtimeType.toString());
       log(mt.toJson().toString());
       emitter(state.copyWith(transactionsHistoryManual: mt));
 

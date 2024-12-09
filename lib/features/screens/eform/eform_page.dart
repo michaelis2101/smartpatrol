@@ -200,6 +200,8 @@ class _EformPageState extends State<EformPage> {
                                                                                     var checkTrxExisting = areaState.transactions.transactions.where((e) => e.codeEquipment == collection[index - 1].kodeEquipment).isEmpty;
                                                                                     if (checkTrxExisting) {
                                                                                       areaBloc.add(SaveNewEFormTransactionEvent(
+                                                                                          formatId: EformController.idFormatSelected.value,
+                                                                                          //================================================
                                                                                           codeSectionArea: EformController.sectionSelected.value,
                                                                                           codeEquipment: collection[index - 1].kodeEquipment,
                                                                                           onFinish: () {
@@ -1073,6 +1075,7 @@ class _EformPageState extends State<EformPage> {
                       onTap: () {
                         print(data.id);
                         EformController.idFormatSelected.value = data.id;
+                        // EformController.formatSelected.value = data.id;
                         EformController.formatSelected.value = data.kodeFormat;
                         EformController.searchInput.clear();
                         areaBloc.add(GetSectionByFormats(data.id));

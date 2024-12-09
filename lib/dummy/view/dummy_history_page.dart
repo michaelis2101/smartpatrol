@@ -51,6 +51,7 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
     if (formats.isNotEmpty) {
       for (var format in formatsList) {
         formats.add(DropdownMenuItem<String>(
+            // value: format.kodeFormat,
             value: format.id,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -68,7 +69,11 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
     super.initState();
 
     try {
-      widget.eformBloc.add(const CheckTransactionEvent());
+      widget.eformBloc.add(const CheckTransactionEvent(
+        filterDropdown: 'All',
+        search: '',
+        tipe: '',
+      ));
       widget.eformBloc.add(const InitEFormEvent());
       userName = widget.authBloc.state.signedUser!.name;
       // widget.eformBloc.add(const SetFormatForDropdown());
@@ -90,8 +95,10 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
   @override
   Widget build(BuildContext context) {
     // final historyBloc = context.read<EFormBloc>();
+    int index = 0;
 
     return DefaultTabController(
+      initialIndex: index,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
@@ -329,7 +336,7 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
                         Text(
                             AppUtil.defaultTimeFormatCustom(
                                 DateTime.parse(data[index].dateCreated),
-                                "dd-MM-yyyy"),
+                                "dd/MM/yyyy"),
                             style: kSubtitle.copyWith(color: Colors.black)),
                         Text(
                             AppUtil.defaultTimeFormatCustom(
@@ -369,6 +376,15 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
                 hintStyle: TextStyle(color: Colors.black),
                 suffixIcon: Icon(Icons.search)),
             controller: srchCont,
+            onChanged: (value) {
+              widget.eformBloc.add(CheckTransactionEvent(
+                  filterDropdown: 'All',
+                  // filterDropdown: selectedFormat.toString(),
+                  search: value,
+                  tipe: ''));
+
+              // print(value);
+            },
           ),
         ),
       );
@@ -424,21 +440,20 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
                   .where((trx) => trx.codeEquipment == equipmentCode)
                   .toList();
 
-              bool hasNegativeStatus = rooms.any((trx) {
-                var valueOption = trx.textValue;
-                return valueOption == "No" || valueOption == "ABNORMAL";
-              });
-
               for (var room in rooms) {
-                if (room.textValue == "No" || room.textValue == "ABNORMAL") {
+                if (room.textValue.toLowerCase() == "No".toLowerCase() ||
+                    room.textValue.toLowerCase() == "ABNORMAL".toLowerCase() ||
+                    room.textValue.toLowerCase() == "Not Safe".toLowerCase()) {
                   warningCount++;
                 }
               }
 
+              print("format : ${data[index].codeFormat}");
+
               return Column(
                 children: [
                   ListTile(
-                    leading: hasNegativeStatus
+                    leading: warningCount > 0
                         ? const Icon(Icons.circle_rounded, color: Colors.red)
                         : const Icon(
                             Icons.circle,
@@ -463,9 +478,9 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
 
                         Row(
                           children: [
-                            hasNegativeStatus
+                            warningCount > 0
                                 ? const Icon(Icons.warning, color: Colors.red)
-                                : const Icon(Icons.check, color: kBlueAccent),
+                                : const Icon(Icons.warning, color: kBlueAccent),
                             const SizedBox(
                               width: 10,
                             ),
@@ -547,6 +562,11 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
                     setState(() {
                       selectedFormat = value;
                     });
+
+                    widget.eformBloc.add(CheckTransactionEvent(
+                        filterDropdown: value.toString(),
+                        search: '',
+                        tipe: ''));
 
                     print(selectedFormat);
                   },

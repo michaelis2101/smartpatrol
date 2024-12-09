@@ -543,14 +543,17 @@ class SaveNewEFormTransactionEvent extends EFormEvent {
   final Function? onFinish;
   final bool verify, reloadAll;
   final bool isSpecialJob;
+  final String formatId;
 
-  const SaveNewEFormTransactionEvent(
-      {this.codeEquipment = '',
-      this.codeSectionArea = '',
-      this.onFinish,
-      this.verify = true,
-      this.reloadAll = true,
-      this.isSpecialJob = false});
+  const SaveNewEFormTransactionEvent({
+    this.codeEquipment = '',
+    this.codeSectionArea = '',
+    this.onFinish,
+    this.verify = true,
+    this.reloadAll = true,
+    this.isSpecialJob = false,
+    this.formatId = '',
+  });
 }
 
 class UpdateEFormTransactionEvent extends EFormEvent {
@@ -625,7 +628,9 @@ class SyncTransactionEvent extends EFormEvent {
 }
 
 class CheckTransactionEvent extends EFormEvent {
-  const CheckTransactionEvent();
+  final String filterDropdown, search, tipe;
+  const CheckTransactionEvent(
+      {required this.filterDropdown, required this.search, required this.tipe});
 }
 
 // class SetFormatForDropdown extends EFormEvent {
