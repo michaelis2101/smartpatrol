@@ -470,11 +470,11 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
             return map;
           });
 
-          // Map<String, String> uniqueRooms =
-          //     data.fold<Map<String, String>>({}, (map, trx) {
-          //   map[trx.codeEquipment] = trx.codeEquipmentName;
-          //   return map;
-          // });
+          Map<String, String> uniqueRooms =
+              data.fold<Map<String, String>>({}, (map, trx) {
+            map[trx.codeEquipment] = trx.codeEquipmentName;
+            return map;
+          });
           Map<String, List<Transaction>> transactionsByFloor = {};
           for (var trx in data) {
             if (!transactionsByFloor.containsKey(trx.codeCpl)) {
@@ -490,6 +490,7 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
               int warningCount = 0;
               bool hasNegativeStatus = false;
               List<String> keys = uniqueFloors.keys.toList();
+              String keysRoom = uniqueRooms.keys.toList()[index];
               // List<String> keysRoom = uniqueRooms.keys.toList();
               String key = keys[index];
 
@@ -499,9 +500,8 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
               List<Transaction> floorTransactions =
                   transactionsByFloor[floorCode]!;
 
-              // List<Transaction> rooms = data
-              //     .where((trx) => trx.codeEquipment == equipmentCode)
-              //     .toList();
+              List<Transaction> rooms =
+                  data.where((trx) => trx.codeEquipment == keysRoom).toList();
 
               // bool hasNegativeStatus = rooms.any((trx) {
               //   String valueOption = trx.textValue.trim();
@@ -531,9 +531,23 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
               print("format : ${data[index].codeFormat}");
               print("warning count : $warningCount");
 
+              String cplCode = rooms.first.codeCpl;
+
               return Column(
                 children: [
                   ListTile(
+                    onTap: () {
+                      widget.eformBloc.add(const InitEFormEvent());
+                      EformController.searchInput.clear();
+                      EformController.indexPage.value = eformStepEquipment;
+                      EformController.equipmentCode.value = keysRoom;
+                      EformController.equipmentName.value =
+                          uniqueRooms[keysRoom]!;
+                      EformController.equipmentBloc
+                          .add(GetEquipmentByCplEvent(cplCode));
+
+                      widget.authBloc.add(const ChangeMainPageEvent(index: 2));
+                    },
                     leading: hasNegativeStatus
                         ? const Icon(Icons.circle_rounded, color: Colors.red)
                         : const Icon(
