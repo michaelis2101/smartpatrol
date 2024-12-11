@@ -47,13 +47,22 @@ class _NfcScanPageState extends State<NfcScanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('NFC Page'),
+        title: Text(
+          'NFC Page',
+          style: kHeading5.copyWith(color: Colors.white),
+        ),
         // Menambahkan tombol kembali di AppBar
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Navigator.pop(context); // Kembali ke layar sebelumnya
           },
+        ),
+        flexibleSpace: Container(
+          decoration: containerToolbarDecoration,
         ),
       ),
       body: Container(
@@ -192,12 +201,15 @@ class _NfcScanPageState extends State<NfcScanPage> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  if (listenerRunning)
+                    Lottie.asset(
+                      'assets/lottie/nfc.json',
+                    ),
+
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextButton(
-                      onPressed:
-                          // Unified condition for both platforms
-                          !listenerRunning ? _listenForNFCEvents : null,
+                      onPressed: !listenerRunning ? _listenForNFCEvents : null,
                       child: Text(
                         // More generic text that works for both platforms
                         listenerRunning
