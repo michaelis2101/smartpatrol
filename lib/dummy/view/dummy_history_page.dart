@@ -30,8 +30,6 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
   List<DropdownMenuItem> formats = [];
   String userName = '';
 
-  // Future<void> getUserJson
-
   void getFormat() async {
     formats = [
       const DropdownMenuItem(
@@ -96,16 +94,13 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final historyBloc = context.read<EFormBloc>();
-    int index = 0;
-
     return DefaultTabController(
-      initialIndex: index,
+      initialIndex: 0,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Dummy History Page',
+            'History',
             style: textStyleHeader.copyWith(color: Colors.white),
           ),
           bottom: PreferredSize(
@@ -114,7 +109,7 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
               color: Colors.white,
               child: const TabBar(
                   indicatorSize: TabBarIndicatorSize.tab,
-                  indicatorColor: kRedDark,
+                  indicatorColor: kGreen,
                   indicatorWeight: 3,
                   tabs: [
                     Tab(
@@ -131,6 +126,9 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
                     ),
                   ]),
             ),
+          ),
+          flexibleSpace: Container(
+            decoration: containerToolbarDecoration,
           ),
           actions: [
             PopupMenuButton(
@@ -403,16 +401,28 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
           padding: const EdgeInsets.all(20),
           child: TextField(
             style: const TextStyle(color: Colors.black),
+            cursorColor: kGreenPrimary,
             decoration: const InputDecoration(
                 label: Text('Search'),
                 labelStyle: TextStyle(color: Colors.black),
+                // enabledBorder: OutlineInputBorder(
+                //   borderSide: BorderSide(color: Colors.black),
+                //   borderRadius: BorderRadius.all(Radius.circular(10)),
+                // ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: kGreenPrimary),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 hintText: "Search here",
                 hintStyle: TextStyle(color: Colors.black),
-                suffixIcon: Icon(Icons.search)),
+                suffixIcon: Icon(
+                  Icons.search,
+                  color: kGreenPrimary,
+                )),
             controller: srchCont,
             onChanged: (value) {
               widget.eformBloc.add(CheckTransactionEvent(
@@ -613,11 +623,12 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
               child: Container(
                 decoration: BoxDecoration(
                     border: Border.all(
-                      color: kRedBlack,
+                      color: Colors.green.shade500,
+                      // color: kGreenPrimary,
                       width: 3,
                     ),
                     // color: Colors.red,
-                    color: kRedBlack,
+                    color: kGreenPrimary,
                     borderRadius: BorderRadius.circular(10)),
                 child: DropdownButton(
                   style: const TextStyle(color: Colors.black),
