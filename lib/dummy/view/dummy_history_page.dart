@@ -6,8 +6,10 @@ import 'package:smart_patrol/data/models/transaction_model.dart';
 import 'package:smart_patrol/data/provider/database_helper.dart';
 import 'package:smart_patrol/features/blocs/auth/auth_bloc.dart';
 import 'package:smart_patrol/features/blocs/eform/eform_bloc.dart';
+import 'package:smart_patrol/features/screens/eform/eform_page.dart';
 import 'package:smart_patrol/features/screens/home/widget/empty_state.dart';
 import 'package:smart_patrol/features/screens/settings/settings_page.dart';
+import 'package:smart_patrol/utils/constants.dart';
 import 'package:smart_patrol/utils/styles/colors.dart';
 import 'package:smart_patrol/utils/styles/text_styles.dart';
 import 'package:smart_patrol/utils/utils.dart';
@@ -155,16 +157,25 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
                   // print(uName);
 
                   print('Sync Data');
-                  // widget.eformBloc.add(SyncTransactionEvent(
-                  //     userId: nik!,
-                  //     uName: uName!,
-                  //     nik: nik,
-                  //     nama: name!,
-                  //     department: departement!,
-                  //     shift: shift!,
-                  //     patrol: patrol!,
-                  //     urlServer: urlServer!,
-                  //     api_id: api_id!));
+                  try {
+                    widget.eformBloc.add(SyncTransactionEvent(
+                        userId: nik!,
+                        uName: uName!,
+                        nik: nik,
+                        nama: name!,
+                        department: departement!,
+                        shift: shift!,
+                        patrol: patrol!,
+                        urlServer: urlServer!,
+                        // api_id: "dikosongin"!
+                        api_id: api_id!));
+                  } catch (e) {
+                    print(e);
+                  } finally {
+                    print('suii');
+                    // widget.eformBloc.add(DeleteAllTransactionEvent(
+                    //     userId: nik!, shift: shift!, patrol: patrol!));
+                  }
                 } else {
                   print('Delete Data');
                   widget.eformBloc.add(DeleteAllTransactionEvent(
@@ -264,19 +275,46 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
                   data.where((trx) => trx.codeEquipment == key).toList();
 
               bool hasNegativeStatus = trxForRoom.any((trx) {
-                String valueOption = trx.textValue;
-                return valueOption == "No" || valueOption == "ABNORMAL";
+                String valueOption = trx.textValue.trim();
+                return valueOption == "No" ||
+                    valueOption == "ABNORMAL" ||
+                    valueOption == "Not Safe";
               });
 
               for (var trx in trxForRoom) {
-                if (trx.textValue == "No" || trx.textValue == "ABNORMAL") {
+                if (trx.textValue.trim() == "No" ||
+                    trx.textValue.trim() == "ABNORMAL" ||
+                    trx.textValue.trim() == "Not Safe") {
                   warningCount++;
                 }
               }
 
+              String cplCode = trxForRoom.first.codeCpl;
+
               return Column(
                 children: [
                   ListTile(
+                    onTap: () {
+                      widget.eformBloc.add(const InitEFormEvent());
+                      EformController.searchInput.clear();
+                      EformController.indexPage.value = eformStepEquipment;
+                      EformController.equipmentCode.value = key;
+                      EformController.equipmentName.value = uniqueRooms[key]!;
+
+                      // Log the values to debug
+                      print("Navigating to EformPage with:");
+                      print(
+                          "Equipment Code: ${EformController.equipmentCode.value}");
+                      print(
+                          "Equipment Name: ${EformController.equipmentName.value}");
+                      print("CPL Code: $cplCode");
+                      EformController.equipmentBloc
+                          .add(GetEquipmentByCplEvent(cplCode));
+
+                      print(EformController.equipmentCollection);
+
+                      widget.authBloc.add(const ChangeMainPageEvent(index: 2));
+                    },
                     title: Text(
                       "$key (${uniqueRooms[key]})",
                       style: const TextStyle(
@@ -421,39 +459,71 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
             return map;
           });
 
-          Map<String, String> uniqueRooms =
-              data.fold<Map<String, String>>({}, (map, trx) {
-            map[trx.codeEquipment] = trx.codeEquipmentName;
-            return map;
-          });
+          // Map<String, String> uniqueRooms =
+          //     data.fold<Map<String, String>>({}, (map, trx) {
+          //   map[trx.codeEquipment] = trx.codeEquipmentName;
+          //   return map;
+          // });
+          Map<String, List<Transaction>> transactionsByFloor = {};
+          for (var trx in data) {
+            if (!transactionsByFloor.containsKey(trx.codeCpl)) {
+              transactionsByFloor[trx.codeCpl] = [];
+            }
+            transactionsByFloor[trx.codeCpl]!.add(trx);
+          }
 
           return ListView.builder(
-            itemCount: uniqueFloors.length,
+            itemCount: transactionsByFloor.length,
+            // itemCount: uniqueFloors.length,
             itemBuilder: (context, index) {
               int warningCount = 0;
+              bool hasNegativeStatus = false;
               List<String> keys = uniqueFloors.keys.toList();
+              // List<String> keysRoom = uniqueRooms.keys.toList();
               String key = keys[index];
 
-              String equipmentCode = uniqueRooms.keys.toList()[index];
+              // String equipmentCode = keysRoom[index];
 
-              List<Transaction> rooms = data
-                  .where((trx) => trx.codeEquipment == equipmentCode)
-                  .toList();
+              String floorCode = transactionsByFloor.keys.toList()[index];
+              List<Transaction> floorTransactions =
+                  transactionsByFloor[floorCode]!;
 
-              for (var room in rooms) {
-                if (room.textValue.toLowerCase() == "No".toLowerCase() ||
-                    room.textValue.toLowerCase() == "ABNORMAL".toLowerCase() ||
-                    room.textValue.toLowerCase() == "Not Safe".toLowerCase()) {
+              // List<Transaction> rooms = data
+              //     .where((trx) => trx.codeEquipment == equipmentCode)
+              //     .toList();
+
+              // bool hasNegativeStatus = rooms.any((trx) {
+              //   String valueOption = trx.textValue.trim();
+              //   return valueOption == "No" ||
+              //       valueOption == "ABNORMAL" ||
+              //       valueOption == "Not Safe";
+              // });
+
+              // for (var room in rooms) {
+              //   print(room.textValue);
+              //   if (room.textValue.toLowerCase() == "No".toLowerCase() ||
+              //       room.textValue.toLowerCase() == "ABNORMAL".toLowerCase() ||
+              //       room.textValue.toLowerCase() == "Not Safe".toLowerCase()) {
+              //     warningCount++;
+              //   }
+              // }
+
+              for (var trx in floorTransactions) {
+                if (trx.textValue.trim() == "No" ||
+                    trx.textValue.trim() == "ABNORMAL" ||
+                    trx.textValue.trim() == "Not Safe") {
                   warningCount++;
+                  hasNegativeStatus = true;
                 }
               }
 
               print("format : ${data[index].codeFormat}");
+              print("warning count : $warningCount");
 
               return Column(
                 children: [
                   ListTile(
-                    leading: warningCount > 0
+                    leading: hasNegativeStatus
                         ? const Icon(Icons.circle_rounded, color: Colors.red)
                         : const Icon(
                             Icons.circle,
@@ -478,7 +548,7 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
 
                         Row(
                           children: [
-                            warningCount > 0
+                            hasNegativeStatus
                                 ? const Icon(Icons.warning, color: Colors.red)
                                 : const Icon(Icons.warning, color: kBlueAccent),
                             const SizedBox(
@@ -575,30 +645,3 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
             )));
   }
 }
-
-// Column(
-//                   children: [
-//                     Expanded(child: listFloorWidget()),
-//                     // SizedBox(
-//                     //   height: 50,
-//                     //   width: AppUtil.width,
-//                     //   child: ElevatedButton(
-//                     //       onPressed: () {
-//                     //         EFormBloc().add(const CheckTransactionEvent());
-//                     //       },
-//                     //       child: const Text("Test")),
-//                     // ),
-//                     // const SizedBox(
-//                     //   height: 20,
-//                     // ),
-//                     // SizedBox(
-//                     //   height: 50,
-//                     //   width: AppUtil.width,
-//                     //   child: ElevatedButton(
-//                     //       onPressed: () {
-//                     //         DatabaseProvider.deleteTransactionJson();
-//                     //       },
-//                     //       child: const Text("delete")),
-//                     // ),
-//                   ],
-//                 ),

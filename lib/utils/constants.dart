@@ -1,6 +1,11 @@
+// const String url =
+//     'http://54.179.192.182:8080/jw/web/json/plugin/id.co.itasoft.asc.digitization.plugin.aw.webservice.ImportData/service?from=field';
+
 //const String urlSync ='http://54.179.192.182:8080/jw/web/json/plugin/id.co.itasoft.asc.digitization.plugin.aw.webservice.ImportData/service';
 const String urlSync =
     '/jw/web/json/plugin/id.co.itasoft.asc.digitization.plugin.aw.webservice.ImportData/service';
+// const String urlSync =
+//     '/jw/web/json/plugin/id.co.itasoft.asc.digitization.plugin.aw.webservice.ImportData/service';
 const String appName = 'Jagawara';
 // const String appName = 'VCM Digitization';
 const String historyMenu = 'History';

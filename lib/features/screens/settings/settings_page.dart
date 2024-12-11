@@ -655,10 +655,11 @@ class _SettingsPageState extends State<SettingsPage> {
                           title: const Text('Input Url Server'),
                           content: TextField(
                             controller: teCtrl,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.url,
+                            // keyboardType: TextInputType.number,
                             autofocus: true,
                             decoration:
-                            const InputDecoration(hintText: 'http://(x)'),
+                                const InputDecoration(hintText: 'http://(x)'),
                           ),
                           actions: [
                             ElevatedButton(
@@ -674,7 +675,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                   var url_servers = teCtrl.value.text;
                                   if (url_servers != '') {
                                     context.read<AuthBloc>().add(
-                                        SetSettingUrlServerEvent(url_server: url_servers));
+                                        SetSettingUrlServerEvent(
+                                            url_server: url_servers));
                                   }
                                   Navigator.of(ctx).pop();
                                 },
@@ -720,10 +722,10 @@ class _SettingsPageState extends State<SettingsPage> {
                           title: const Text('Input Api ID'),
                           content: TextField(
                             controller: teCtrl,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.text,
                             autofocus: true,
-                            decoration:
-                            const InputDecoration(hintText: 'ex : diskosongin'),
+                            decoration: const InputDecoration(
+                                hintText: 'ex : diskosongin'),
                           ),
                           actions: [
                             ElevatedButton(
@@ -738,8 +740,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                 onPressed: () {
                                   var api_id = teCtrl.value.text;
                                   if (api_id != '') {
-                                    context.read<AuthBloc>().add(
-                                        SetApiKeyEvent(api_id: api_id));
+                                    context
+                                        .read<AuthBloc>()
+                                        .add(SetApiKeyEvent(api_id: api_id));
                                   }
                                   Navigator.of(ctx).pop();
                                 },
@@ -866,16 +869,16 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget urlServerSection() => BlocBuilder<AuthBloc, AuthState>(
       bloc: context.read<AuthBloc>(),
       builder: (context, state) => Text(
-        '${state.signedUser!.urlServer}',
-        style: const TextStyle(color: kTextBlue, fontSize: 14),
-      ));
+            '${state.signedUser!.urlServer}',
+            style: const TextStyle(color: kTextBlue, fontSize: 14),
+          ));
 
   Widget apiKeySection() => BlocBuilder<AuthBloc, AuthState>(
       bloc: context.read<AuthBloc>(),
       builder: (context, state) => Text(
-        '${state.signedUser!.api_id}',
-        style: const TextStyle(color: kTextBlue, fontSize: 14),
-      ));
+            '${state.signedUser!.api_id}',
+            style: const TextStyle(color: kTextBlue, fontSize: 14),
+          ));
 
   Widget shiftSection() => BlocBuilder<AuthBloc, AuthState>(
         bloc: authBloc,

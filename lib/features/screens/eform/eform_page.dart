@@ -1172,6 +1172,8 @@ class _EformPageState extends State<EformPage> {
                           EformController.indexPage.value = eformStepEquipment;
                           EformController.sectionTitle.value = data.namaCpl;
                           EformController.scroll.jumpTo(0);
+
+                          print("cpl : ${data.kodeCpl}");
                         },
                       ),
                     );

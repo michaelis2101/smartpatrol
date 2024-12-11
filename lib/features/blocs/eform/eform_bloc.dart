@@ -4107,8 +4107,10 @@ class EFormBloc extends Bloc<EFormEvent, EFormState> {
           log("sync to server ${event.urlServer.toString()}$urlSync?form=standart");
           log(mdata.toJson().toString());
           Response response = await dio.post(
+              // "${event.urlServer.toString()}$urlSync?form=field",
               "${event.urlServer.toString()}$urlSync?form=standart",
               data: mdata.toJson(),
+              // data: mdata.toJson(),
               options: options);
           print(mdata.toJson().toString());
           // Check the response status
