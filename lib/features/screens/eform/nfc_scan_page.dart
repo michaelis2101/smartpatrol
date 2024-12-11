@@ -237,7 +237,7 @@ class _NfcScanPageState extends State<NfcScanPage> {
               return Container(
                 alignment: Alignment.center,
                 child: const Text(
-                  "NFC Tidak Ada",
+                  "NFC Not Available",
                   style: TextStyle(color: Colors.black),
                 ),
               );
