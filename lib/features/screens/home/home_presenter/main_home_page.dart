@@ -109,7 +109,8 @@ class _MainHomePageState extends State<MainHomePage> {
           builder: (context, state) => BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             unselectedItemColor: Colors.black,
-            selectedItemColor: kRedBlack,
+            selectedItemColor: Colors.green.shade600,
+            // selectedItemColor: kRedBlack,
             backgroundColor: Colors.white,
             currentIndex: state.indexPage,
             items: _bottomNavBarItems,
