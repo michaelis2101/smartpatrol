@@ -263,7 +263,7 @@ class _HomePresenterPageState extends State<HomePresenterPage> {
                           kBlueTealPrimary,
                           // Color(0x94713d37),
                           // Color(0x9bda2f4e),
-                          // Color(0xff3c0912)
+                          // Color(0xff3c0912),
                           // Color(0xff8f66bd),
                           // Color(0xffc1bb2d),
                         ],

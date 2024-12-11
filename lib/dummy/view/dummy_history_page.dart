@@ -101,7 +101,8 @@ class _DummyHistoryPageState extends State<DummyHistoryPage> {
         appBar: AppBar(
           title: Text(
             'History',
-            style: textStyleHeader.copyWith(color: Colors.white),
+            style: textStyleHeader.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
           ),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
