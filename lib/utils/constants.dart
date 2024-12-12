@@ -12,7 +12,6 @@ const String historyMenu = 'History';
 const String settingMenu = 'Setting';
 
 const String appPrefShiftName = "shift_name";
-//
 const String fromHomePage = "home_page";
 const String fromHistoryDocument = "history_doc";
 const String fromHistoryEquipment = "history_equipment";
